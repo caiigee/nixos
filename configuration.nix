@@ -4,18 +4,6 @@
 
 { config, pkgs, ... }:
 
-let
-  hyprlandConfig = pkgs.writeText "hyprland-regreet-config" ''
-    exec-once = ${config.programs.regreet.package}/bin/regreet; hyprctl dispatch exit
-    monitor = , preferred, auto, 1, mirror, desc:AU Optronics 0xC199
-    input {
-      kb_layout = hr
-    }
-    misc {
-      disable_hyprland_logo = true
-    }
-  '';
-in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   imports = [ ./hardware-configuration.nix ];
@@ -55,82 +43,33 @@ in
   # SOFTWARE
   nixpkgs.config.allowUnfree = true;
   virtualisation.waydroid.enable = true;  
-  environment.systemPackages = with pkgs; [ 
-    lact
-    #keyd
-  ];
+  environment.systemPackages = with pkgs; [ lact ];
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   programs.adb.enable = true;
-  
-  # KEYBOARD
-  #services.keyd = {
-  #  enable = true;
-  #  keyboards = {
-  #    default = {
-  #      ids = [ "*" ];
-  #      settings = {
-  #        main = {
-  #          "altgr+w" = "dead_greek";
-  #        };
-  #      };
-  #    };
-  #  };
-  #};
   
   # HYPRLAND
   # Necessary for Nautilus dark mode?
   programs.dconf.enable = true;
   # Necessary for Nautilus trash feature.
   services.gvfs.enable = true;
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
   security.pam.services.hyprlock = {};
-  # programs.iio-hyprland.enable = true;
-  # "Display manager":
-  services.greetd = {
+  programs.uwsm = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.hyprland}/bin/Hyprland --config ${hyprlandConfig}";
-      };
-      user = "greeter";
-    };
-  };
-  programs.regreet = {
-    enable = true;
-    settings = {
-      background = {
-        path = "/etc/nixos/hypr/traveller.png";
-      };
-
-      # How the background image covers the screen if the aspect ratio doesn't match 
-      # Available values: "Fill", "Contain", "Cover", "ScaleDown" Refer to: 
-      # https://docs.gtk.org/gtk4/enum.ContentFit.html NOTE: This is ignored if ReGreet 
-      # isn't compiled with GTK v4.8 support.
-      fit = "Contain";
-
-      # env = {
-        # ENV_VARIABLE = "value";
-      # };
-
-      GTK = {
-        application_prefer_dark_theme = true;
-        cursor_theme_name = "Adwaita";
-        font_name = "Cantarell 16";
-        icon_theme_name = "Adwaita";
-        theme_name = "Adwaita";
-      };
-
-      commands = {
-        reboot = [ "systemctl" "reboot" ];
-        poweroff = [ "systemctl" "poweroff" ];
-      };
-      
-      appearance = {
-        greeting_msg = "Welcome back!";
+    waylandCompositors = {
+      hyprland = {
+        prettyName = "Hyprland";
+        comment = "Hyprland compositor managed by UWSM";
+        binPath = "/run/current-system/sw/bin/Hyprland";
       };
     };
   };
+  programs.iio-hyprland.enable = true;
+  hardware.sensor.iio.enable = true;
   
   # AUDIO?
   # rtkit is optional but recommended
@@ -156,30 +95,9 @@ in
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
   
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  # Enabling the OpenSSH daemon.
+  services.openssh.enable = true;  
+  
+  # DO NOT CHANGE!
+  system.stateVersion = "24.05";
 }

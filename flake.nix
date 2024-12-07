@@ -5,16 +5,13 @@
     nixpkgs.url = "nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, ... }:
-  let
-    system = "x86_64-linux";
-  in {
+  outputs = { self, nixpkgs, ... }: {
     nixosConfigurations = {
       flowX16 = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = "x86_64-linux";
         modules = [
           ./configuration.nix
-          ./laptop-flowX16.nix
+          ./flowX16.nix
         ];
       };
     };
