@@ -48,17 +48,21 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.caiigee = [
-  	      ./home/caiigee.nix
-	      ./home/firefox.nix
-              ./home/zed.nix
-              ./home/hypr.nix
-	      ./home/anyrun.nix
-              ./home/waybar.nix
-              anyrun.homeManagerModules.default
-            ];
-	
-            home-manager.extraSpecialArgs = { inherit anyrun anyrun-plugins hypr-wpchanger; };
+	    home-manager.users.caiigee = {
+              imports = [
+                ./users/caiigee/home.nix
+                ./users/caiigee/firefox.nix
+                ./users/caiigee/zed.nix
+                ./users/caiigee/hypr.nix
+                ./users/caiigee/anyrun.nix
+                ./users/caiigee/waybar.nix
+                anyrun.homeManagerModules.default
+              ];
+
+              home-manager.extraSpecialArgs = {
+                inherit anyrun anyrun-plugins hypr-wpchanger;
+              };
+            };
           }
         ];
       };
