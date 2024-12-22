@@ -30,6 +30,7 @@
   outputs = { 
     self,
     nixpkgs,
+    nur,
     home-manager,
     anyrun,
     anyrun-plugins,
@@ -40,6 +41,7 @@
       hypr-flowX16 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          nur.modules.nixos.default
           ./configuration.nix
           ./systems/flowX16/configuration.nix
           ./systems/flowX16/hardware-configuration.nix
@@ -58,10 +60,10 @@
                 ./users/caiigee/waybar.nix
                 anyrun.homeManagerModules.default
               ];
+	    };
 
-              home-manager.extraSpecialArgs = {
-                inherit anyrun anyrun-plugins hypr-wpchanger;
-              };
+            home-manager.extraSpecialArgs = {
+              inherit anyrun anyrun-plugins hypr-wpchanger;
             };
           }
         ];

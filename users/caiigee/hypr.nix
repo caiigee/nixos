@@ -139,7 +139,7 @@
         "SUPER, A, exec, pkill waybar || uwsm app -- waybar"
 
         # Shortcuts:
-        "SUPER, I, exec, $editor --new ~/.config"
+        "SUPER, I, exec, $terminal --directory /etc/nixos"
         "SUPER, V, exec, $terminal --class clipse -e clipse"
         "SUPER, N, exec, $editor --new ~/Documents/Notes"
 

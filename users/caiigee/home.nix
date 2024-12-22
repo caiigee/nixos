@@ -89,11 +89,10 @@
   ];
 
   programs.ssh.enable = true;
-  #programs.home-manager.enable = true;
   programs.git = {
     enable = true;
     userName = "caiigee";
-    userEmail = "141404025+caiigee@users.noreply.github.com";
+    userEmail = "caiigee@pm.me";
     extraConfig = {
       core = {
         sshcommand = "ssh -i /home/caiigee/.ssh/id_ed25519";
