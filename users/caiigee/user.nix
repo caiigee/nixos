@@ -14,13 +14,7 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
-  fonts.fontconfig = {
-    enable = true;
-    defaultFonts = {
-      sansSerif = [ "DejaVuSans" ];
-      monospace = [ "ZedMono" ];
-    };
-  };
+  fonts.fontconfig.enable = true;
 
   # Cursor:
   home.pointerCursor = {
@@ -56,7 +50,6 @@
   };
 
   # SOFTWARE
-  # Packages without options:
   home.packages = with pkgs; [
     # Apps:
     libreoffice-fresh
@@ -72,10 +65,8 @@
     wike
     pdfarranger
 
-    # Fonts:
+    # Fonts (for some reason they don't symlink to /etc/profiles/per-user/caiigee/share/fonts):
     nerd-fonts.symbols-only
-    nerd-fonts.dejavu-sans-mono
-    nerd-fonts.zed-mono
 
     # Utility:
     brightnessctl

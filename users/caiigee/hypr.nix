@@ -24,7 +24,7 @@
   ];
   programs.kitty.enable = true;
   services.dunst.enable = true;
-  
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
@@ -41,12 +41,12 @@
       "$menu" = "uwsm app -- anyrun";
       "$browser" = "uwsm app -- firefox";
       "$editor" = "uwsm app -T -- zeditor";
+      "$emoji" = "uwsm app -- smile"
 
       # Autostart applications
       exec-once = [
         "uwsm app -s b -- clipse -listen"
         "uwsm app -s b -- waybar"
-        # "uwsm app -s b -- dunst"
         "uwsm app -s b -- wpchanger"
         "systemctl --user enable --now hypridle.service"
         "systemctl --user enable --now hyprpaper.service"
@@ -134,12 +134,13 @@
         "SUPER, space, exec, $menu"
         "SUPER, RETURN, exec, $terminal"
         "SUPER, T, exec, $editor"
-        "SUPER, E, exec, $fileManager --new-window"
+        "SUPER, F, exec, $fileManager --new-window"
         "SUPER, B, exec, $browser"
         "SUPER, A, exec, pkill waybar || uwsm app -- waybar"
+        "SUPER, E, exec, $emoji"
 
         # Shortcuts:
-        "SUPER, I, exec, $terminal --directory /etc/nixos"
+        "SUPER, I, exec, $editor --new /etc/nixos/users/caiigee"
         "SUPER, V, exec, $terminal --class clipse -e clipse"
         "SUPER, N, exec, $editor --new ~/Documents/Notes"
 
@@ -180,8 +181,10 @@
       ] ++ (builtins.concatLists (builtins.genList (i:
         let ws = i + 1;
         in [ "SUPER, ${toString ws}, workspace, ${toString ws}" ]) 9));
+
       bindm =
         [ "SUPER, mouse:272, movewindow" "SUPER, mouse:273, resizewindow" ];
+
       binde = [
         # Resizing
         "SUPER ALT, left, resizeactive, -32 0"
@@ -218,6 +221,7 @@
         "float,class:blueman-manager"
         "float,class:org.gnome.Calendar"
         "float,class:org.gnome.FileRoller"
+        
         # Floating pop-ups:
         "float,class:firefox,initialTitle:^$"
         "float,class:firefox,initialTitle:^(Library)$"
@@ -226,6 +230,9 @@
         "float,class:^(signal-desktop)$,title:^(Open Files)$"
 
         "size 90% 90%,class:gthumb"
+        "size 60% 60%,class:^(Gimp-2.10)$,title:^(Open Image)$"
+        "size 90% 90%,class:^(com.github.jeromerobert.pdfarranger)$,title:^(Hide Margins)$"
+        "size 90% 90%,class:^(com.github.jeromerobert.pdfarranger)$,title:^(Crop Margins)$"
         "size 80% 80%,class:org.gnome.Calendar"
         "size 50% 50%,class:xdg-desktop-portal-gtk"
         "size 622 652,class:clipse"
@@ -358,6 +365,6 @@
     TERMINAL = "kitty";
     NIXOS_OZONE_WL = "1";
   };
-  
+
   xdg.userDirs.enable = true;
 }

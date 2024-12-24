@@ -52,7 +52,7 @@
             home-manager.useUserPackages = true;
 	    home-manager.users.caiigee = {
               imports = [
-                ./users/caiigee/home.nix
+                ./users/caiigee/user.nix
                 ./users/caiigee/firefox.nix
                 ./users/caiigee/zed.nix
                 ./users/caiigee/hypr.nix
