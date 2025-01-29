@@ -1,1 +1,1 @@
-modules/waybar.nix
+/etc/nixos/users/caiigee/modules/waybar.nix

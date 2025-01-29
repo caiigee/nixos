@@ -1,1 +1,1 @@
-modules/firefox.nix
+/etc/nixos/users/caiigee/modules/firefox.nix

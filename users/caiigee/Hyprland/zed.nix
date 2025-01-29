@@ -1,1 +1,1 @@
-modules/zed.nix
+/etc/nixos/users/caiigee/modules/zed.nix

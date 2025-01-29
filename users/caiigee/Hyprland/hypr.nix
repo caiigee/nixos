@@ -1,1 +1,1 @@
-modules/hypr.nix
+/etc/nixos/users/caiigee/modules/hypr.nix
