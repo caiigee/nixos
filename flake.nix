@@ -34,14 +34,14 @@
   }: let
     getSystemModules = hostname: desktop: [
       ./configuration.nix
-      "./systems/${hostname}/configuration.nix"
-      "./systems/${hostname}/hardware-configuration.nix"
-      "./environments/${desktop}.nix"
+      ./systems/${hostname}/configuration.nix
+      ./systems/${hostname}/hardware-configuration.nix
+      ./environments/${desktop}.nix
     ];
     getUserModules = username: desktop: let
       names  = builtins.attrNames (builtins.readDir ./users/${username}/${desktop});
-      modules = map (filename: "./users/${username}/${desktop}/${filename}") names;
-    in [ "./users/${username}/user.nix" ] ++ modules;
+      modules = map (filename: ./users/${username}/${desktop}/${filename}) names;
+    in [ ./users/${username}/user.nix ] ++ modules;
   in {
     nixosConfigurations = {
       flowX16-Hyprland = nixpkgs.lib.nixosSystem {

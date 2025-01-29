@@ -100,7 +100,7 @@
       switch = ''
         rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4
         nix profile remove --all
-        sudo nixos-rebuild switch --flake /etc/nixos#$XDG_CURRENT_DESKTOP-$(hostname)
+        sudo nixos-rebuild switch --flake /etc/nixos#$(hostname)-$XDG_CURRENT_DESKTOP
       '';
     };
     initExtra = ''
