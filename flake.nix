@@ -18,13 +18,9 @@
 
     # My software
     anyrun-plugins = {
-      url = "git+ssh://git@github.com/caiigee/anyrun-plugins.git";
+      url = "github:caiigee/anyrun-plugins";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hypr-wpchanger = {
-      url = "git+ssh://git@github.com/caiigee/hypr-wpchanger.git";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };    
   };
 
   outputs = { 
@@ -34,39 +30,33 @@
     home-manager,
     anyrun,
     anyrun-plugins,
-    hypr-wpchanger,
     ... 
-  }: {
+  }: let
+    getSystemModules = hostname: desktop: [
+      ./configuration.nix
+      "./systems/${hostname}/configuration.nix"
+      "./systems/${hostname}/hardware-configuration.nix"
+      "./environments/${desktop}.nix"
+    ];
+    getUserModules = username: desktop: let
+      names  = builtins.attrNames (builtins.readDir ./users/${username}/${desktop});
+      modules = map (filename: "./users/${username}/${desktop}/${filename}") names;
+    in [ "./users/${username}/user.nix" ] ++ modules;
+  in {
     nixosConfigurations = {
-      hypr-flowX16 = nixpkgs.lib.nixosSystem {
+      flowX16-Hyprland = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [
+	modules = [
           nur.modules.nixos.default
-          ./configuration.nix
-          ./systems/flowX16/configuration.nix
-          ./systems/flowX16/hardware-configuration.nix
-          ./environments/hypr.nix
-          home-manager.nixosModules.home-manager
-          {
+          home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-	    home-manager.users.caiigee = {
-              imports = [
-                ./users/caiigee/user.nix
-                ./users/caiigee/firefox.nix
-                ./users/caiigee/zed.nix
-                ./users/caiigee/hypr.nix
-                ./users/caiigee/anyrun.nix
-                ./users/caiigee/waybar.nix
-                anyrun.homeManagerModules.default
-              ];
-	    };
-
-            home-manager.extraSpecialArgs = {
-              inherit anyrun anyrun-plugins hypr-wpchanger;
+	    home-manager.useUserPackages = true;
+ 	    home-manager.users.caiigee = {
+              imports = [ anyrun.homeManagerModules.default ] ++ getUserModules "caiigee" "Hyprland";
             };
+	    home-manager.extraSpecialArgs = { inherit anyrun anyrun-plugins; };
           }
-        ];
+        ] ++ getSystemModules "flowX16" "Hyprland";
       };
     };
   };

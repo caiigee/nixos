@@ -1,4 +1,4 @@
-{ pkgs, hypr-wpchanger, ... }: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     baobab
     nautilus
@@ -20,7 +20,6 @@
     clipse
     grimblast
     wl-clipboard
-    hypr-wpchanger.packages.${pkgs.system}.default
   ];
   programs.kitty.enable = true;
   services.dunst.enable = true;
@@ -41,13 +40,13 @@
       "$menu" = "uwsm app -- anyrun";
       "$browser" = "uwsm app -- firefox";
       "$editor" = "uwsm app -T -- zeditor";
-      "$emoji" = "uwsm app -- smile"
+      # "$emoji" = "uwsm app -- smile";
 
       # Autostart applications
       exec-once = [
         "uwsm app -s b -- clipse -listen"
         "uwsm app -s b -- waybar"
-        "uwsm app -s b -- wpchanger"
+        "uwsm app -s b -- nix run github:caiigee/hypr-wpchanger"
         "systemctl --user enable --now hypridle.service"
         "systemctl --user enable --now hyprpaper.service"
         "systemctl --user enable --now hyprpolkitagent.service"

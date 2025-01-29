@@ -74,7 +74,7 @@
           format-ethernet = "{ifname} ";
           format-wifi = "{essid} ";
           max-length = 50;
-          on-click = "kitty --class nmtui -e nmtui";
+          on-click = "uwsm app -- kitty --class nmtui -e nmtui";
         };
         pulseaudio = {
           format = "{icon}";
@@ -95,7 +95,7 @@
           };
           format-muted = " {format_source}";
           format-source-muted = "";
-          on-click = "pwvucontrol";
+          on-click = "uwsm app -- pwvucontrol";
         };
         layer = "top";
         output = [

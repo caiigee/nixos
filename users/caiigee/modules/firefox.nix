@@ -32,6 +32,11 @@ in
             url = "https://github.com";
           }
           {
+            name = "Regexr";
+            keyword = "re";
+            url = "https://regexr.com/";
+          }
+          {
             name = "ILovePDF";
             keyword = "pdf";
             url = "https://www.ilovepdf.com";
@@ -100,11 +105,6 @@ in
             name = "Hyprland Wiki";
             keyword = "hw";
             url = "https://wiki.hyprland.org/";
-          }
-          {
-            name = "Catalogue of Life";
-            keyword = "col";
-            url = "https://www.catalogueoflife.org/";
           }
           {
             name = "Hrvatski jezični portal";
@@ -237,7 +237,7 @@ in
             "SearXNG" = {
               urls = [
                 {
-                  template = "https://priv.au/search";
+                  template = "https://priv.au";
                   params = [
                     {
                       "name" = "q";
@@ -246,7 +246,7 @@ in
                   ];
                 }
               ];
-              icon = "${config.home.homeDirectory}/.config/home-manager/icons/searxng.svg";
+              iconURL = "https://docs.searxng.org/_static/searxng-wordmark.svg";
             };
             "Youtube" = {
               urls = [

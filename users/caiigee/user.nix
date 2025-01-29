@@ -55,14 +55,13 @@
     libreoffice-fresh
     signal-desktop
     foliate
+    gimp
     icon-library
     switcheroo
-    gimp
     pinta
     ghidra
     sqlitebrowser
     anki
-    wike
     pdfarranger
 
     # Fonts (for some reason they don't symlink to /etc/profiles/per-user/caiigee/share/fonts):
@@ -75,7 +74,6 @@
     dex
 
     # Gaming:
-    bottles
     prismlauncher
   ];
 
@@ -83,7 +81,7 @@
   programs.git = {
     enable = true;
     userName = "caiigee";
-    userEmail = "caiigee@pm.me";
+    userEmail = "141404025+caiigee@users.noreply.github.com";
     extraConfig = {
       core = {
         sshcommand = "ssh -i /home/caiigee/.ssh/id_ed25519";
@@ -97,16 +95,28 @@
       ngc = "sudo nix-collect-garbage -d && nix-collect-garbage -d && sudo nix-store --gc";
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
-      nsc = "nix run github:snowfallorg/nix-software-center";
+      npl = "nix profile list";
+      update = "sudo nix flake update --flake /etc/nixos";
+      switch = ''
+        rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4
+        nix profile remove --all
+        sudo nixos-rebuild switch --flake /etc/nixos#$XDG_CURRENT_DESKTOP-$(hostname)
+      '';
     };
     initExtra = ''
-      nos() {
+      npi() {
         if [ -z "$1" ]; then
-          echo "Desktop environment is required!"
+          echo "Package name is required!"
           return 1
         fi
-        rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4
-        sudo nixos-rebuild switch --flake /etc/nixos#"$1"-$(hostname)
+        nix profile install nixpkgs#"$1"
+      }
+      npr() {
+        if [ -z "$1" ]; then
+          echo "Package name is required!"
+          return 1
+        fi
+        nix profile remove "$1"
       }
     '';
   };
@@ -119,5 +129,6 @@
     BROWSER = "firefox";
     EDITOR = "zeditor";
     XDG_SCREENSHOTS_DIR = /home/caiigee/Pictures/Screenshots;
+    PROMPT_DIRTRIM = 2;
   };
 }
