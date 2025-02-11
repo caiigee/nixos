@@ -52,7 +52,7 @@
         "systemctl --user enable --now hyprpolkitagent.service"
         "[workspace 1 silent] $browser --new-tab https://chatgpt.com --new-tab https://claude.ai"
         "[workspace 1 silent] sleep 1;$fileManager  ~"
-        "[workspace 1 silent] sleep 2.8;hyprctl dispatch resizewindowpixel exact 35% 100%,firefox;$terminal"
+        "[workspace 1 silent] sleep 2.8;hyprctl dispatch resizewindowpixel exact 35% 100%,class:firefox;$terminal"
       ];
 
       # NVidia drivers broke Zed so this is the workaround:
@@ -118,7 +118,7 @@
       input = {
         kb_layout = "hr";
         follow_mouse = 1;
-        sensitivity = 0;
+        sensitivity = -0.5;
         kb_options = "compose:caps";
 
         touchpad = { natural_scroll = true; };
@@ -139,7 +139,7 @@
         "SUPER, E, exec, $emoji"
 
         # Shortcuts:
-        "SUPER, I, exec, $editor --new /etc/nixos/users/caiigee"
+        "SUPER, I, exec, $editor --new /etc/nixos"
         "SUPER, V, exec, $terminal --class clipse -e clipse"
         "SUPER, N, exec, $editor --new ~/Documents/Notes"
 
@@ -238,6 +238,9 @@
         "size 30% 60%,class:nmtui"
         "size 40% 60%,title:Format Cells"
         "size 80% 80%,class:^(com.github.johnfactotum.Foliate)$,initialTitle:^(Image from .+)$"
+        
+        # Full opacity:
+        "opacity 1,class:Minecraft"
       ];
     };
   };

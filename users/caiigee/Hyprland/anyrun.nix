@@ -1,1 +1,1 @@
-/etc/nixos/users/caiigee/modules/anyrun.nix
+../modules/anyrun.nix

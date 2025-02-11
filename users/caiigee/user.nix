@@ -74,7 +74,9 @@
     dex
 
     # Gaming:
+    heroic
     prismlauncher
+    cartridges
   ];
 
   programs.ssh.enable = true;
@@ -95,7 +97,7 @@
       ngc = "sudo nix-collect-garbage -d && nix-collect-garbage -d && sudo nix-store --gc";
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
-      npl = "nix profile list";
+      list = "nix profile list";
       update = "sudo nix flake update --flake /etc/nixos";
       switch = ''
         rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4
@@ -104,14 +106,29 @@
       '';
     };
     initExtra = ''
-      npi() {
+      flash() {
+        if [ -z "$1" ]; then
+          echo "ISO path is required!"
+          return 1
+        fi
+        if [ -z "$2" ]; then
+          echo "sdX must be specified!"
+          return 1
+        fi
+        if [ ! -e "/dev/$2" ]; then
+          echo "Device /dev/$2 does not exist!"
+          return 1
+        fi
+        sudo dd if="$1" of=/dev/"$2" bs=4M status=progress
+      }
+      install() {
         if [ -z "$1" ]; then
           echo "Package name is required!"
           return 1
         fi
         nix profile install nixpkgs#"$1"
       }
-      npr() {
+      remove() {
         if [ -z "$1" ]; then
           echo "Package name is required!"
           return 1
