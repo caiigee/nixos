@@ -48,6 +48,9 @@
       "wheel"
     ];
   };
+  users.users.root = {
+    packages = with pkgs; [ git ];
+  };
   
   system.stateVersion = "25.05";
 }

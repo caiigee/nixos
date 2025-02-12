@@ -50,6 +50,10 @@
       "adbusers"
     ];
   };
+  users.users.root = {
+    packages = with pkgs; [ git ];
+  };
+  
 
   # SOFTWARE
   nixpkgs.config.allowUnfree = true;
