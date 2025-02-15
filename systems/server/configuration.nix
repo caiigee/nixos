@@ -45,15 +45,6 @@
   };
   console.keyMap = "croat";
 
-  # USER(S)
-  users.users.caiigee = {
-    isNormalUser = true;
-    description = "caiigee";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-  };
   users.users.root = {
     packages = with pkgs; [ git ];
   };

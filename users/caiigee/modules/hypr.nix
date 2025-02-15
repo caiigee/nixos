@@ -118,7 +118,8 @@
       input = {
         kb_layout = "hr";
         follow_mouse = 1;
-        sensitivity = -0.5;
+        # sensitivity = -0.3;
+        accel_profile = "flat";
         kb_options = "compose:caps";
 
         touchpad = { natural_scroll = true; };
@@ -240,7 +241,9 @@
         "size 80% 80%,class:^(com.github.johnfactotum.Foliate)$,initialTitle:^(Image from .+)$"
         
         # Full opacity:
-        "opacity 1,class:Minecraft"
+        # Minecraft 1.21.4
+        "opacity 1,class:^(Minecraft (\\d+)\.(\\d+)\.(\\d+))$"
+        "opacity 1,class:^(steam_app_\\d+)$"
       ];
     };
   };

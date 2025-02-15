@@ -64,6 +64,7 @@
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   programs.adb.enable = true;
+  services.gnome.evolution-data-server.enable = true;
 
   # AUDIO?
   # rtkit is optional but recommended
