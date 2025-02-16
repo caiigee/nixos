@@ -20,6 +20,7 @@
     clipse
     grimblast
     wl-clipboard
+    gnome-epub-thumbnailer
   ];
   programs.kitty.enable = true;
   services.dunst.enable = true;
