@@ -15,7 +15,7 @@
     "flakes"
   ];
   services.openssh.enable = true;
-
+  
   # BOOTLOADER
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -65,12 +65,14 @@
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   programs.adb.enable = true;
   services.gnome.evolution-data-server.enable = true;
-  fileSystems = {
-    "/home/caiigee/Documents" = {
-      device = "/home/caiigee/.local/share/waydroid/data/media/0/Documents";
-      options = [ "bind" ];
-    };
-  };  
+  programs.gamemode.enable = true;
+  programs.gamescope.enable = true;
+#  fileSystems = {
+#    "/home/caiigee/Documents" = {
+#      device = "/home/caiigee/.local/share/waydroid/data/media/0/Documents";
+#      options = [ "bind" ];
+#    };
+#  };  
 
   # AUDIO?
   # rtkit is optional but recommended

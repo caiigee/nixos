@@ -139,6 +139,7 @@
         "SUPER, B, exec, $browser"
         "SUPER, A, exec, pkill waybar || uwsm app -- waybar"
         "SUPER, E, exec, $emoji"
+        "SUPER, G, exec, uwsm app -- heroic"
 
         # Shortcuts:
         "SUPER, I, exec, $editor --new /etc/nixos"

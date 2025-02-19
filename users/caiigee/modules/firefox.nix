@@ -1,14 +1,12 @@
 {
-  config,
   pkgs,
   ...
-}: 
+}:
 let
   gnomeTheme = builtins.fetchGit {
     url = "https://github.com/rafaelmardojai/firefox-gnome-theme.git";
     rev = "aa9b67045fcdec7ae045b36d7a41b36b3463b842";
   };
-  snowflakeIcon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
 in
 {
   programs.firefox = {
@@ -20,6 +18,11 @@ in
             name = "Wikipedia";
             keyword = "w";
             url = "https://en.wikipedia.org";
+          }
+          {
+            name = "Youtube";
+            keyword = "y";
+            url = "https://www.youtube.com/";
           }
           {
             name = "Wiktionary";
@@ -127,7 +130,7 @@ in
             url = "https://lms.mef.hr/e-ucenje/2024-2025/course/index.php?categoryid=1";
           }
         ];
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           proton-pass
           darkreader
           ublock-origin
@@ -148,8 +151,9 @@ in
                   ];
                 }
               ];
-              iconURL = "https://en.wikipedia.org/favicon.ico";
-              definedAliases = ["w:"];
+              iconUpdateURL = "https://en.wikipedia.org/favicon.ico";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "w:" ];
             };
             "Wiktionary" = {
               urls = [
@@ -163,8 +167,9 @@ in
                   ];
                 }
               ];
-              iconURL = "https://en.wiktionary.org/favicon.ico";
-              definedAliases = ["wt:"];
+              iconUpdateURL = "https://en.wiktionary.org/favicon.ico";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "wt:" ];
             };
             "Nix Packages" = {
               urls = [
@@ -182,8 +187,9 @@ in
                   ];
                 }
               ];
-              icon = snowflakeIcon;
-              definedAliases = ["np:"];
+              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "np:" ];
             };
             "Nix Options" = {
               urls = [
@@ -201,8 +207,9 @@ in
                   ];
                 }
               ];
-              icon = snowflakeIcon;
-              definedAliases = ["no:"];
+              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "no:" ];
             };
             "NixOS Wiki" = {
               urls = [
@@ -216,8 +223,9 @@ in
                   ];
                 }
               ];
-              icon = snowflakeIcon;
-              definedAliases = ["nw:"];
+              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "nw:" ];
             };
             "GitHub" = {
               urls = [
@@ -231,8 +239,9 @@ in
                   ];
                 }
               ];
-              icon = "~/.config/home-manager/icons/github.svg";
-              definedAliases = ["gh:"];
+              iconUpdateURL = "https://github.githubassets.com/assets/apple-touch-icon-72x72-e090c8a282d0.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "gh:" ];
             };
             "SearXNG" = {
               urls = [
@@ -246,7 +255,8 @@ in
                   ];
                 }
               ];
-              iconURL = "https://docs.searxng.org/_static/searxng-wordmark.svg";
+              iconUpdateURL = "https://priv.au/static/themes/simple/img/favicon.png?60321eeb6e2f478f0e5704529308c594d5924246";
+              updateInterval = 24 * 60 * 60 * 1000;
             };
             "Youtube" = {
               urls = [
@@ -260,8 +270,9 @@ in
                   ];
                 }
               ];
-              icon = "${config.home.homeDirectory}/.config/home-manager/icons/youtube.svg";
-              definedAliases = ["y:"];
+              iconUpdateURL = "https://www.youtube.com/s/desktop/e208051c/img/logos/favicon_144x144.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "y:" ];
             };
             "Reddit" = {
               urls = [
@@ -275,8 +286,9 @@ in
                   ];
                 }
               ];
-              icon = "${config.home.homeDirectory}/.config/home-manager/icons/reddit.svg";
-              definedAliases = ["r:"];
+              iconUpdateURL = "https://www.redditstatic.com/shreddit/assets/favicon/128x128.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "r:" ];
             };
             "Anna's Archive" = {
               urls = [
@@ -302,8 +314,9 @@ in
                   ];
                 }
               ];
-              iconURL = "https://annas-archive.org/favicon.ico";
-              definedAliases = ["aa:"];
+              iconUpdateURL = "https://annas-archive.org/apple-touch-icon.png?hash=d2fa3410fb1ae23ef0ab";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "aa:" ];
             };
             "Home Manager Options" = {
               urls = [
@@ -321,10 +334,10 @@ in
                   ];
                 }
               ];
-              icon = snowflakeIcon;
-              definedAliases = ["hmo:"];
+              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "hmo:" ];
             };
-
             "Crates" = {
               urls = [
                 {
@@ -337,8 +350,9 @@ in
                   ];
                 }
               ];
-              icon = "${config.home.homeDirectory}/.config/home-manager/icons/crates.png";
-              definedAliases = ["cr:"];
+              iconUpdateURL = "https://crates.io/assets/cargo.png";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "cr:" ];
             };
             "Bing".metaData.hidden = true;
             "Google".metaData.hidden = true;
@@ -1046,7 +1060,8 @@ in
           "privacy.donottrackheader.enabled" = false;
 
           # Customize ETP settings:
-          "privacy.query_stripping.strip_list" = "__hsfp __hssc __hstc __s _hsenc _openstat dclid fbclid gbraid gclid hsCtaTracking igshid mc_eid ml_subscriber ml_subscriber_hash msclkid oft_c oft_ck oft_d oft_id oft_ids oft_k oft_lk oft_sk oly_anon_id oly_enc_id rb_clickid s_cid twclid vero_conv vero_id wbraid wickedid yclid";
+          "privacy.query_stripping.strip_list" =
+            "__hsfp __hssc __hstc __s _hsenc _openstat dclid fbclid gbraid gclid hsCtaTracking igshid mc_eid ml_subscriber ml_subscriber_hash msclkid oft_c oft_ck oft_d oft_id oft_ids oft_k oft_lk oft_sk oly_anon_id oly_enc_id rb_clickid s_cid twclid vero_conv vero_id wbraid wickedid yclid";
           # "network.cookie.cookieBehavior" = 5; # [DEFAULT: 5]
           # "privacy.fingerprintingProtection" = true; # [FF114+] [ETP FF119+]
           # "privacy.partition.network_state.ocsp_cache" = true; # [DEFAULT: true FF123+]
@@ -1218,7 +1233,7 @@ in
       };
     };
   };
-  
+
   home.file.".mozilla/firefox/default/chrome/theme" = {
     source = "${gnomeTheme}/theme";
     recursive = true;
