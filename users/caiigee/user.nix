@@ -72,11 +72,6 @@
     unzip
     zip
     dex
-
-    # Gaming:
-    heroic
-    prismlauncher
-    cartridges
   ];
 
   programs.ssh.enable = true;
