@@ -93,11 +93,11 @@
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
       list = "nix profile list";
-      update = "sudo nix flake update --flake /etc/nixos";
+      update = "cd $CONFIG_DIR && nix flake update && commit \"Updated lock\"";
       switch = ''
         rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4
         nix profile remove --all
-        sudo nixos-rebuild switch --flake /etc/nixos#$(hostname)-$XDG_CURRENT_DESKTOP
+        sudo nixos-rebuild switch --flake $CONFIG_DIR#$(hostname)-$XDG_CURRENT_DESKTOP
       '';
     };
     initExtra = ''
@@ -178,7 +178,8 @@
   home.sessionVariables = {
     BROWSER = "firefox";
     EDITOR = "zeditor";
-    XDG_SCREENSHOTS_DIR = /home/caiigee/Pictures/Screenshots;
+    XDG_SCREENSHOTS_DIR = "/home/caiigee/Pictures/Screenshots";
     PROMPT_DIRTRIM = 2;
+    CONFIG_DIR = "/home/caiigee/Desktop/Projects/nixos"
   };
 }
