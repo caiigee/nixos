@@ -85,6 +85,8 @@
       };
     };
   };
+  programs.tmux.enable = true;
+  programs.fastfetch.enable = true;
 
   programs.bash = {
     enable = true;
@@ -93,11 +95,11 @@
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
       list = "nix profile list";
-      update = "cd $CONFIG_DIR && nix flake update && commit \"Updated lock\"";
+      update = "cd $XDG_CONFIG_HOME/nixos && nix flake update && commit \"Updated lock\"";
       switch = ''
         rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4
         nix profile remove --all
-        sudo nixos-rebuild switch --flake $CONFIG_DIR#$(hostname)-$XDG_CURRENT_DESKTOP
+        sudo nixos-rebuild switch --flake $XDG_CONFIG_HOME/nixos#$(hostname)-$XDG_CURRENT_DESKTOP
       '';
     };
     initExtra = ''
@@ -157,16 +159,9 @@
             return 1
         fi
 
-        # Check if running as root (sudo)
-        if [ "$(id -u)" -eq 0 ]; then
-            SUDO="sudo"
-        else
-            SUDO=""
-        fi
-
-        $SUDO git add .
-        $SUDO git commit -m "$*"
-        $SUDO git push
+        git add .
+        git commit -m "$*"
+        git push
       }
     '';
   };
@@ -180,6 +175,5 @@
     EDITOR = "zeditor";
     XDG_SCREENSHOTS_DIR = "/home/caiigee/Pictures/Screenshots";
     PROMPT_DIRTRIM = 2;
-    CONFIG_DIR = "/home/caiigee/Desktop/Projects/nixos"
   };
 }

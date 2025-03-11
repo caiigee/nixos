@@ -39,8 +39,8 @@
       "$terminal" = "uwsm app -- kitty";
       "$fileManager" = "uwsm app -- nautilus";
       "$menu" = "uwsm app -- anyrun";
-      "$browser" = "uwsm app -- firefox";
-      "$editor" = "uwsm app -T -- zeditor";
+      "$browser" = "uwsm app -- $BROWSER";
+      "$editor" = "uwsm app -T -- $EDITOR";
       # "$emoji" = "uwsm app -- smile";
 
       # Autostart applications
@@ -57,7 +57,7 @@
       ];
 
       # NVidia drivers broke Zed so this is the workaround:
-      render = { explicit_sync = 0; };
+      #render = { explicit_sync = 0; };
 
       # Cursor settings
       cursor = {
@@ -142,7 +142,7 @@
         "SUPER, G, exec, uwsm app -- heroic"
 
         # Shortcuts:
-        "SUPER, I, exec, $editor --new /etc/nixos"
+        "SUPER, I, exec, $editor --new ~/.config/nixos"
         "SUPER, V, exec, $terminal --class clipse -e clipse"
         "SUPER, N, exec, $editor --new ~/Documents/Notes"
 
