@@ -1,21 +1,18 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   config,
   pkgs,
   lib,
   ...
-}:
-
-{
+}: {
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
   services.openssh.enable = true;
-  
+
   # BOOTLOADER
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,12 +48,11 @@
     ];
   };
   users.users.root = {
-    packages = with pkgs; [ git ];
+    packages = with pkgs; [git];
   };
 
   # SECURITY
-#  environment.extraInit = "umask 0077";
-  
+  #  environment.extraInit = "umask 0077";
 
   # SOFTWARE
   nixpkgs.config.allowUnfree = true;
@@ -64,12 +60,12 @@
   environment.systemPackages = with pkgs; [
     lact
   ];
-  systemd.packages = with pkgs; [ lact ];
-  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
+  systemd.packages = with pkgs; [lact];
+  systemd.services.lactd.wantedBy = ["multi-user.target"];
   programs.adb.enable = true;
   services.gnome.evolution-data-server.enable = true;
-#  programs.gamemode.enable = true;
-#  programs.gamescope.enable = true;
+  #  programs.gamemode.enable = true;
+  #  programs.gamescope.enable = true;
 
   # AUDIO?
   # rtkit is optional but recommended
@@ -105,7 +101,7 @@
 
   # NVIDIA
   hardware.graphics.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -149,7 +145,7 @@
   # On the go:
   specialisation = {
     on-the-go.configuration = {
-      system.nixos.tags = [ "on-the-go" ];
+      system.nixos.tags = ["on-the-go"];
       hardware.nvidia = {
         prime.offload.enable = lib.mkForce true;
         prime.offload.enableOffloadCmd = lib.mkForce true;

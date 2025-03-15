@@ -134,8 +134,4 @@
       ruff
     ];
   };
-
-  home.sessionVariables = {
-    EDITOR = "zeditor";
-  };
 }
