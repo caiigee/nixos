@@ -104,6 +104,6 @@
         ];
       };
     };
-    style = builtins.readFile ../styles/waybar.css;
+    style = builtins.readFile ../assets/styles/waybar.css;
   };
 }

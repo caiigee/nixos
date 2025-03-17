@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  toLua = str: "lua << EOF\n${str}\nEOF\n"
+  toLua = str: "lua << EOF\n${str}\nEOF\n";
 in
 {
   programs.neovim = {
@@ -21,6 +21,13 @@ in
     	vim.o.shiftwidth = 2
     	vim.o.tabstop = 2
     	vim.o.expandtab = true
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "rust", "python" },
+        callback = function()
+          vim.bo.shiftwidth = 4
+          vim.bo.tabstop = 4
+        end,
+      })
 
     	-- Clipboard settings
     	vim.o.clipboard = 'unnamedplus'
@@ -35,19 +42,24 @@ in
 			-- Autocommands
 			vim.api.nvim_create_autocmd("InsertEnter", {
 					pattern = "*",
-					command = "nohlsearch"
+					command = "set nohlsearch"
 			})
 
-			-- Shortcuts
+			-- Moving lines Shortcuts
 			vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true })
 			vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
 			vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent = true })
 			vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
 			vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
 			vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+
+      -- Telescope Shortcuts
+      vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>')
+      vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>')
+      vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>')
+      vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>')
   	'';
     plugins = with pkgs.vimPlugins; [
-      nvim-lspconfig
 			nvim-web-devicons
 			vim-visual-multi
 			nvim-spectre
@@ -59,19 +71,43 @@ in
 				p.tree-sitter-rust
 				p.tree-sitter-python
 				p.tree-sitter-json
-			]));
+			]))
 			nvim-treesitter-textobjects
 
 			# Telescope
 			{
         plugin = telescope-nvim;
-				config = toLua "require(\"telescope\").setup()"
+				type = "lua";
+				config = "require(\"telescope\").setup()";
 			}
       plenary-nvim
+      
+      # LSP
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        config = ''
+          local lspconfig = require("lspconfig")
+
+          lspconfig.nixd.setup({})
+          lspconfig.pyright.setup({})
+          lspconfig.rust_analyzer.setup({
+            settings = {
+              ["rust-analyzer"] = {
+                cargo = { allFeatures = true },
+                checkOnSave = { command = "clippy" },
+              }
+            }
+          })
+        '';
+      }
     ];
     extraPackages = with pkgs; [
       tree-sitter
       nixd
+      pyright
+      rust-analyzer
+      clippy
 
 			# Telescope deps:
 			ripgrep

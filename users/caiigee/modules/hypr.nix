@@ -22,7 +22,10 @@
     wl-clipboard
     gnome-epub-thumbnailer
   ];
-  programs.kitty.enable = true;
+  programs.kitty = {
+    enable = true;
+    font.size = 12;
+  };
   services.dunst.enable = true;
 
   wayland.windowManager.hyprland = {
@@ -139,12 +142,12 @@
         "SUPER, B, exec, $browser"
         "SUPER, A, exec, pkill waybar || uwsm app -- waybar"
         "SUPER, E, exec, $emoji"
-        "SUPER, G, exec, uwsm app -- heroic"
+        #"SUPER, G, exec, uwsm app -- heroic"
 
         # Shortcuts:
-        "SUPER, I, exec, $editor --new ~/.config/nixos"
+        "SUPER, I, exec, $editor -c 'cd $XDG_CONFIG_HOME/nixos' -c 'Telescope find_files'"
         "SUPER, V, exec, $terminal --class clipse -e clipse"
-        "SUPER, N, exec, $editor --new ~/Documents/Notes"
+        "SUPER, N, exec, $editor -c 'cd $NOTES_DIR' -c 'Telescope find_files'"
 
         # Misc:
         "SUPER, Q, killactive"
@@ -343,17 +346,6 @@
     fi
   '';
 
-  programs.bash.initExtra = ''
-    op() {
-      if [ -z "$1" ]; then
-        echo "Project name is required!"
-        return 1
-      fi
-      PROJECT="/home/caiigee/Desktop/Projects/$1"
-      nix develop $PROJECT -c uwsm app -T -- zeditor --new $PROJECT
-    }
-  '';
-
   # Dead greek
   # xdg.configFile."custom.xkb".text = ''
   #   xkb_symbols "basic" {
@@ -369,7 +361,6 @@
   };
 
   home.sessionVariables = {
-    TERMINAL = "kitty";
     NIXOS_OZONE_WL = "1";
   };
 

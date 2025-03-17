@@ -100,5 +100,7 @@
     XDG_SCREENSHOTS_DIR = "/home/caiigee/Pictures/Screenshots";
     PROMPT_DIRTRIM = 2;
 		EDITOR = "nvim";
+    NOTES_DIR = "/home/caiigee/Documents/Notes";
+    PROJECTS_DIR = "/home/caiigee/Desktop/Projects";
   };
 }

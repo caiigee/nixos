@@ -35,7 +35,7 @@ in
       showResultsImmediately = true;
       maxEntries = null;
     };
-    extraCss = builtins.readFile ../styles/anyrun.css;
+    extraCss = builtins.readFile ../assets/styles/anyrun.css;
 
     extraConfigFiles."symbols.ron".text = ''
       Config(

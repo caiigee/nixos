@@ -1,1 +1,0 @@
-../modules/firefox.nix

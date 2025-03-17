@@ -4,7 +4,7 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-		  ls = "ls -alc";
+		  ls = "ls -al";
       clean = "sudo nix-collect-garbage -d && sudo nix-store --gc";
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
@@ -52,9 +52,17 @@
 					echo "Package name is required!"
 					return 1
 				fi
-				nix run nixpkgs#$1 "${@:2}"
+				nix run nixpkgs#$1 ''${@:2}
 			}
-      clone() {
+      dev() {
+        if [ -z "$1" ]; then
+          echo "Error: Project name is required!"
+          return 1
+        fi
+        
+        cd $PROJECTS_DIR/"$1" && nix develop . -c nvim -c "Telescope find_files"
+     }
+     clone() {
         if [ -z "$1" ]; then
           echo "Error: GitHub repository name is required!"
           return 1
@@ -86,6 +94,4 @@
       }
     '';
   };
-
-
 }
