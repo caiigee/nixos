@@ -1,6 +1,4 @@
-{
-...
-}:
+{...}:
 
 {
   # Necessary for Nautilus trash feature.
@@ -21,6 +19,4 @@
       };
     };
   };
-  programs.iio-hyprland.enable = true;
-  hardware.sensor.iio.enable = true;
 }
