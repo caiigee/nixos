@@ -24,7 +24,6 @@
   };
 
   outputs = { 
-    self,
     nixpkgs,
     nur,
     home-manager,
@@ -32,13 +31,13 @@
     anyrun-plugins,
     ... 
   }: let
-    getSystemModules = { hostname, environment }: [
-      (./. + "/systems/${hostname}/configuration.nix")
-      (./. + "/systems/${hostname}/hardware-configuration.nix")
+    getSystemModules = { system, hostname, environment }: [
+      (./. + "/systems/${system}/${hostname}/configuration.nix")
+      (./. + "/systems/${system}/${hostname}/hardware-configuration.nix")
     ] ++ (if environment != null && environment != "" then [(./. + "/environments/${environment}.nix")] else []);
 
     getUserModules = { username, environment }: let
-      environmentDir = "/users/${username}/${environment}";
+      environmentDir = "/users/${username}/environments/${environment}";
       names = builtins.attrNames (builtins.readDir (./. + environmentDir));
       modules = map (filename: (./. + "${environmentDir}/${filename}")) names;
     in [ (./. + "/users/${username}/user.nix") ] ++ modules;
@@ -52,16 +51,16 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.caiigee = {
-                imports = [ anyrun.homeManagerModules.default ] ++ (getUserModules {username = "caiigee"; environment = "Hyprland";});
+                imports = [ anyrun.homeManagerModules.default ] ++ (getUserModules { username = "caiigee"; environment = "Hyprland"; });
             };
             home-manager.extraSpecialArgs = { inherit anyrun anyrun-plugins; };
           }
-        ] ++ (getSystemModules {hostname = "flowX16"; environment = "Hyprland";});
+        ] ++ (getSystemModules { system = "x86_64-linux"; hostname = "flowX16"; environment = "Hyprland"; });
       };
      
       server = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = (getSystemModules { hostname = "server"; environment = ""; });
+        modules = (getSystemModules { system = "x86_64-linux"; hostname = "server"; environment = ""; });
       };
     };
   };

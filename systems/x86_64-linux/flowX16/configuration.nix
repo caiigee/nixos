@@ -47,12 +47,6 @@
       "adbusers"
     ];
   };
-  users.users.root = {
-    packages = with pkgs; [git];
-  };
-
-  # SECURITY
-  #  environment.extraInit = "umask 0077";
 
   # SOFTWARE
   nixpkgs.config.allowUnfree = true;
@@ -66,6 +60,12 @@
   services.gnome.evolution-data-server.enable = true;
   #  programs.gamemode.enable = true;
   #  programs.gamescope.enable = true;
+
+  # NIX
+  nix.gc.automatic = true;
+  nix.gc.dates = "daily";
+  nix.gc.options = "--delete-older-than 10d";
+  nix.settings.auto-optimise-store = true;
 
   # AUDIO?
   # rtkit is optional but recommended

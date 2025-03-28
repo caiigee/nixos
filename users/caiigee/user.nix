@@ -74,6 +74,11 @@
     zip
     dex
 		cachix
+    (pkgs.writeShellApplication {
+      name = "open-project";
+      runtimeInputs = [ pkgs.fzf ];
+      text = builtins.readFile ./assets/scripts/open_project.sh; 
+    })
   ];
 
   programs.ssh.enable = true;
@@ -102,5 +107,6 @@
 		EDITOR = "nvim";
     NOTES_DIR = "/home/caiigee/Documents/Notes";
     PROJECTS_DIR = "/home/caiigee/Desktop/Projects";
+    IDE = "nvim -c 'Telescope find_files'";
   };
 }

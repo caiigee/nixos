@@ -24,10 +24,17 @@
   ];
   programs.kitty = {
     enable = true;
-    font.size = 12;
+    font = {
+      size = 16;
+      name = "Dejavu Sans";
+    };
+    settings = {
+      tab_bar_edge = "top";
+    };   
   };
   services.dunst.enable = true;
 
+  # Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = false;
@@ -145,9 +152,9 @@
         #"SUPER, G, exec, uwsm app -- heroic"
 
         # Shortcuts:
-        "SUPER, I, exec, $editor -c 'cd $XDG_CONFIG_HOME/nixos' -c 'Telescope find_files'"
+        "SUPER, I, exec, cd $XDG_CONFIG_HOME/nixos && $editor -c 'Telescope find_files'"
         "SUPER, V, exec, $terminal --class clipse -e clipse"
-        "SUPER, N, exec, $editor -c 'cd $NOTES_DIR' -c 'Telescope find_files'"
+        "SUPER, N, exec, cd $NOTES_DIR && $editor -c 'Telescope find_files'"
 
         # Misc:
         "SUPER, Q, killactive"
