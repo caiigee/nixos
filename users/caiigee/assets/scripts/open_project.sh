@@ -3,7 +3,6 @@
 # Set default values if variables are not set
 PROJECTS_DIR="${PROJECTS_DIR:-$HOME/Desktop/Projects}"
 IDE="${IDE:-$EDITOR}"
-TERMINAL="${TERMINAL:-$TERM}"
 
 # Function to determine the main language of a project
 get_project_icon() {
@@ -48,4 +47,5 @@ if [[ -z "$chosen_dir" ]]; then
 fi
 
 # Open the project in the terminal
-$TERMINAL -e bash -c "cd '$PROJECTS_DIR/$chosen_dir' && nix develop . -c $IDE"
+cd "$PROJECTS_DIR/$chosen_dir" || exit
+exec nix develop . -c tmux new "$EDITOR"

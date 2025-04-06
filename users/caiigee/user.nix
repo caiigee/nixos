@@ -79,6 +79,7 @@
       runtimeInputs = [ pkgs.fzf ];
       text = builtins.readFile ./assets/scripts/open_project.sh; 
     })
+    bat
   ];
 
   programs.ssh.enable = true;
@@ -93,7 +94,12 @@
     };
   };
 
-  programs.tmux.enable = true;
+  programs.tmux = {
+    enable = true;
+    extraConfig = ''
+      set-option -g status-position top
+    '';
+  };
   programs.fastfetch.enable = true;
 
   # BLUETOOTH
@@ -107,6 +113,7 @@
 		EDITOR = "nvim";
     NOTES_DIR = "/home/caiigee/Documents/Notes";
     PROJECTS_DIR = "/home/caiigee/Desktop/Projects";
-    IDE = "nvim -c 'Telescope find_files'";
+    TERMINAL = "kitty";
+    FILE_MANAGER = "nautilus";
   };
 }
