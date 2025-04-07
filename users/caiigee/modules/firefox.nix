@@ -13,123 +13,131 @@ in
     enable = true;
     profiles = {
       default = {
-        bookmarks = [
-          {
-            name = "Wikipedia";
-            keyword = "w";
-            url = "https://en.wikipedia.org";
-          }
-          {
-            name = "Youtube";
-            keyword = "y";
-            url = "https://www.youtube.com/";
-          }
-          {
-            name = "Wiktionary";
-            keyword = "wt";
-            url = "https://en.wiktionary.org";
-          }
-          {
-            name = "GitHub";
-            keyword = "gh";
-            url = "https://github.com";
-          }
-          {
-            name = "Regexr";
-            keyword = "re";
-            url = "https://regexr.com/";
-          }
-          {
-            name = "ILovePDF";
-            keyword = "pdf";
-            url = "https://www.ilovepdf.com";
-          }
-          {
-            name = "Claude";
-            keyword = "ai";
-            url = "https://claude.ai/new";
-          }
-          {
-            name = "Nextcloud";
-            keyword = "nc";
-            url = "https://nc.caiigee.com/index.php/apps/dashboard";
-          }
-          {
-            name = "Home Manager Options";
-            keyword = "hmo";
-            url = "https://home-manager-options.extranix.com/";
-          }
-          {
-            name = "Nix Packages";
-            keyword = "np";
-            url = "https://search.nixos.org/packages";
-          }
-          {
-            name = "Nix Options";
-            keyword = "no";
-            url = "https://search.nixos.org/options?";
-          }
-          {
-            name = "NixOS Wiki";
-            keyword = "nw";
-            url = "https://wiki.nixos.org/wiki/NixOS_Wiki";
-          }
-          {
-            name = "Reddit";
-            keyword = "r";
-            url = "https://www.reddit.com";
-          }
-          {
-            name = "TA2 Viewer";
-            keyword = "ta2";
-            url = "https://ta2viewer.openanatomy.org/";
-          }
-          {
-            name = "ChatGPT";
-            keyword = "gpt";
-            url = "https://chatgpt.com/";
-          }
-          {
-            name = "Latin is simple";
-            keyword = "lis";
-            url = "https://www.latin-is-simple.com/";
-          }
-          {
-            name = "Anna's Archive";
-            keyword = "aa";
-            url = "https://annas-archive.org";
-          }
-          {
-            name = "Proton Mail";
-            keyword = "pm";
-            url = "https://mail.proton.me/u/0/inbox";
-          }
-          {
-            name = "Hyprland Wiki";
-            keyword = "hw";
-            url = "https://wiki.hyprland.org/";
-          }
-          {
-            name = "Hrvatski jezični portal";
-            keyword = "hjp";
-            url = "https://hjp.znanje.hr/index.php?show=main";
-          }
-          {
-            name = "Crates";
-            keyword = "cr";
-            url = "https://crates.io";
-          }
-          {
-            name = "Compose sequences";
-            keyword = "cs";
-            url = "https://cgit.freedesktop.org/xorg/lib/libX11/plain/nls/en_US.UTF-8/Compose.pre";
-          }
-          {
-            name = "LMS";
-            keyword = "lms";
-            url = "https://lms.mef.hr/e-ucenje/2024-2025/course/index.php?categoryid=1";
-          }
-        ];
+        bookmarks = {
+          force = true;
+          settings = [
+            {
+              name = "Wikipedia";
+              keyword = "w";
+              url = "https://en.wikipedia.org";
+            }
+            {
+              name = "Youtube";
+              keyword = "y";
+              url = "https://www.youtube.com/";
+            }
+            {
+              name = "Wiktionary";
+              keyword = "wt";
+              url = "https://en.wiktionary.org";
+            }
+            {
+              name = "GitHub";
+              keyword = "gh";
+              url = "https://github.com";
+            }
+            {
+              name = "Regexr";
+              keyword = "re";
+              url = "https://regexr.com/";
+            }
+            {
+              name = "ILovePDF";
+              keyword = "pdf";
+              url = "https://www.ilovepdf.com";
+            }
+            {
+              name = "Claude";
+              keyword = "ai";
+              url = "https://claude.ai/new";
+            }
+            {
+              name = "Nextcloud";
+              keyword = "nc";
+              url = "https://nc.caiigee.com/index.php/apps/dashboard";
+            }
+            {
+              name = "Home Manager Options";
+              keyword = "hmo";
+              url = "https://home-manager-options.extranix.com/";
+            }
+            {
+              name = "Nix Packages";
+              keyword = "np";
+              url = "https://search.nixos.org/packages";
+            }
+            {
+              name = "Nix Options";
+              keyword = "no";
+              url = "https://search.nixos.org/options?";
+            }
+            {
+              name = "NixOS Wiki";
+              keyword = "nw";
+              url = "https://wiki.nixos.org/wiki/NixOS_Wiki";
+            }
+            {
+              name = "Reddit";
+              keyword = "r";
+              url = "https://www.reddit.com";
+            }
+            {
+              name = "TA2 Viewer";
+              keyword = "ta2";
+              url = "https://ta2viewer.openanatomy.org/";
+            }
+            {
+              name = "ChatGPT";
+              keyword = "gpt";
+              url = "https://chatgpt.com/";
+            }
+            {
+              name = "Latin is simple";
+              keyword = "lis";
+              url = "https://www.latin-is-simple.com/";
+            }
+            {
+              name = "Anna's Archive";
+              keyword = "aa";
+              url = "https://annas-archive.org";
+            }
+            {
+              name = "Proton Mail";
+              keyword = "pm";
+              url = "https://mail.proton.me/u/0/inbox";
+            }
+            {
+              name = "Hyprland Wiki";
+              keyword = "hw";
+              url = "https://wiki.hyprland.org/";
+            }
+            {
+              name = "Hrvatski jezični portal";
+              keyword = "hjp";
+              url = "https://hjp.znanje.hr/index.php?show=main";
+            }
+            {
+              name = "Crates";
+              keyword = "cr";
+              url = "https://crates.io";
+            }
+            {
+              name = "Compose sequences";
+              keyword = "cs";
+              url = "https://cgit.freedesktop.org/xorg/lib/libX11/plain/nls/en_US.UTF-8/Compose.pre";
+            }
+            {
+              name = "LMS";
+              keyword = "lms";
+              url = "https://lms.mef.hr/e-ucenje/2024-2025/course/index.php?categoryid=1";
+            }
+            {
+              name = "Gramatika";
+              keyword = "hsg";
+              url = "http://gramatika.hr/";
+            }
+          ];
+        };
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           proton-pass
           darkreader
@@ -151,7 +159,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://en.wikipedia.org/favicon.ico";
+              icon = "https://en.wikipedia.org/favicon.ico";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "w:" ];
             };
@@ -167,7 +175,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://en.wiktionary.org/favicon.ico";
+              icon = "https://en.wiktionary.org/favicon.ico";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "wt:" ];
             };
@@ -187,7 +195,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              icon = "https://wiki.nixos.org/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "np:" ];
             };
@@ -207,7 +215,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              icon = "https://wiki.nixos.org/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "no:" ];
             };
@@ -223,7 +231,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              icon = "https://wiki.nixos.org/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "nw:" ];
             };
@@ -239,7 +247,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://github.githubassets.com/assets/apple-touch-icon-72x72-e090c8a282d0.png";
+              icon = "https://github.githubassets.com/assets/apple-touch-icon-72x72-e090c8a282d0.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "gh:" ];
             };
@@ -255,7 +263,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://priv.au/static/themes/simple/img/favicon.png?60321eeb6e2f478f0e5704529308c594d5924246";
+              icon = "https://priv.au/static/themes/simple/img/favicon.png?60321eeb6e2f478f0e5704529308c594d5924246";
               updateInterval = 24 * 60 * 60 * 1000;
             };
             "Youtube" = {
@@ -270,7 +278,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://www.youtube.com/s/desktop/e208051c/img/logos/favicon_144x144.png";
+              icon = "https://www.youtube.com/s/desktop/e208051c/img/logos/favicon_144x144.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "y:" ];
             };
@@ -286,7 +294,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://www.redditstatic.com/shreddit/assets/favicon/128x128.png";
+              icon = "https://www.redditstatic.com/shreddit/assets/favicon/128x128.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "r:" ];
             };
@@ -314,7 +322,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://annas-archive.org/apple-touch-icon.png?hash=d2fa3410fb1ae23ef0ab";
+              icon = "https://annas-archive.org/apple-touch-icon.png?hash=d2fa3410fb1ae23ef0ab";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "aa:" ];
             };
@@ -334,7 +342,7 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              icon = "https://wiki.nixos.org/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "hmo:" ];
             };
@@ -350,14 +358,14 @@ in
                   ];
                 }
               ];
-              iconUpdateURL = "https://crates.io/assets/cargo.png";
+              icon = "https://crates.io/assets/cargo.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "cr:" ];
             };
-            "Bing".metaData.hidden = true;
-            "Google".metaData.hidden = true;
-            "DuckDuckGo".metaData.hidden = true;
-            "Wikipedia (en)".metaData.hidden = true;
+            "bing".metaData.hidden = true;
+            "google".metaData.hidden = true;
+            "ddg".metaData.hidden = true;
+            "wikipedia".metaData.hidden = true;
           };
         };
         settings = {
@@ -1229,7 +1237,7 @@ in
       };
       normal = {
         id = 1;
-        search.default = "Google";
+        search.default = "google";
       };
     };
   };

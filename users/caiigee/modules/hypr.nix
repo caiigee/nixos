@@ -113,7 +113,7 @@
         exec-once = [
           "uwsm app -s b -- clipse -listen"
           "uwsm app -s b -- waybar"
-          "uwsm app -s b -- ${wpchanger}"
+          "uwsm app -s b -- wpchanger"
           "systemctl --user enable --now hypridle.service"
           "systemctl --user enable --now hyprpaper.service"
           "systemctl --user enable --now hyprpolkitagent.service"

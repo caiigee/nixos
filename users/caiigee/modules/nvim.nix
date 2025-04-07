@@ -302,22 +302,14 @@
                 },
                 center = {
                   {
-                    icon = '🕘 ',
-                    desc = 'Recently opened files                  ',
-                    action = 'Telescope oldfiles',
-                    shortcut = 'SPC t o'
-                  },
-                  {
                     icon = '🔍 ',
-                    desc = 'Find file in current dir               ',
+                    desc = 'Find files',
                     action = 'Telescope find_files',
-                    shortcut = 'SPC t f'
                   },
                   {
                     icon = '📄 ',
-                    desc = 'New file                               ',
+                    desc = 'New file',
                     action = 'ene',
-                    shortcut = 'SPC b n'
                   },
                 },
               }
