@@ -73,13 +73,13 @@
     unzip
     zip
     dex
-		cachix
     (pkgs.writeShellApplication {
       name = "open-project";
       runtimeInputs = [ pkgs.fzf ];
       text = builtins.readFile ./assets/scripts/open_project.sh; 
     })
     bat
+    prismlauncher
   ];
 
   programs.ssh.enable = true;

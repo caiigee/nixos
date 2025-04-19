@@ -5,7 +5,7 @@
     enable = true;
     shellAliases = {
 		  ls = "ls -al";
-      clean = "sudo nix-collect-garbage -d && sudo nix-store --gc";
+      clean = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
       list = "nix profile list";

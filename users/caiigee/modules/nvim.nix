@@ -302,6 +302,15 @@
                 },
                 center = {
                   {
+                    icon = '🕒 ',
+                    desc = 'Recent files',
+                    action = function()
+                      require("telescope.builtin").oldfiles({
+                        cwd_only = true,
+                      })
+                    end,
+                  },
+                  {
                     icon = '🔍 ',
                     desc = 'Find files',
                     action = 'Telescope find_files',

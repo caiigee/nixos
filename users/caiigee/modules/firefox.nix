@@ -282,7 +282,7 @@ in
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "y:" ];
             };
-            "Reddit" = {
+            "reddit" = {
               urls = [
                 {
                   template = "https://www.reddit.com/search/";
