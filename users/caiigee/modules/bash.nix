@@ -16,82 +16,83 @@
         sudo nixos-rebuild switch --flake $XDG_CONFIG_HOME/nixos#$(hostname)-$XDG_CURRENT_DESKTOP
       '';
     };
-    initExtra = ''
-            umask 0077
-            flash() {
-              if [ -z "$1" ]; then
-                echo "ISO path is required!"
-                return 1
-              fi
-              if [ -z "$2" ]; then
-                echo "sdX must be specified!"
-                return 1
-              fi
-              if [ ! -e "/dev/$2" ]; then
-                echo "Device /dev/$2 does not exist!"
-                return 1
-              fi
-              sudo dd if="$1" of=/dev/"$2" bs=4M status=progress
-            }
-            install() {
-              if [ -z "$1" ]; then
-                echo "Package name is required!"
-                return 1
-              fi
-              nix profile install nixpkgs#"$1"
-            }
-            remove() {
-              if [ -z "$1" ]; then
-                echo "Package name is required!"
-                return 1
-              fi
-              nix profile remove "$1"
-            }
-      			run() {
-      				if [ -z "$1" ]; then
-      					echo "Package name is required!"
-      					return 1
-      				fi
-      				nix run nixpkgs#$1 ''${@:2}
-      			}
-            dev() {
-              if [ -z "$1" ]; then
-                echo "Error: Project name is required!"
-                return 1
-              fi
-              
-              cd $PROJECTS_DIR/"$1" && nix develop . -c nvim -c "Telescope find_files"
-           }
-           clone() {
-              if [ -z "$1" ]; then
-                echo "Error: GitHub repository name is required!"
-                return 1
-              fi
+    initExtra = # bash
+      ''
+         umask 0077
+         flash() {
+           if [ -z "$1" ]; then
+             echo "ISO path is required!"
+             return 1
+           fi
+           if [ -z "$2" ]; then
+             echo "sdX must be specified!"
+             return 1
+           fi
+           if [ ! -e "/dev/$2" ]; then
+             echo "Device /dev/$2 does not exist!"
+             return 1
+           fi
+           sudo dd if="$1" of=/dev/"$2" bs=4M status=progress
+         }
+         install() {
+           if [ -z "$1" ]; then
+             echo "Package name is required!"
+             return 1
+           fi
+           nix profile install nixpkgs#"$1"
+         }
+         remove() {
+           if [ -z "$1" ]; then
+             echo "Package name is required!"
+             return 1
+           fi
+           nix profile remove "$1"
+         }
+         run() {
+           if [ -z "$1" ]; then
+             echo "Package name is required!"
+             return 1
+           fi
+           nix run nixpkgs#$1 ''${@:2}
+         }
+         dev() {
+           if [ -z "$1" ]; then
+             echo "Error: Project name is required!"
+             return 1
+           fi
+           
+           cd $PROJECTS_DIR/"$1" && nix develop . -c nvim -c "Telescope find_files"
+        }
+        clone() {
+           if [ -z "$1" ]; then
+             echo "Error: GitHub repository name is required!"
+             return 1
+           fi
 
-              git clone git@github.com:"$1".git
+           git clone git@github.com:"$1".git
 
-              if [ $? -ne 0 ]; then
-                echo "Error: Failed to clone repository."
-                return 1
-              fi
+           if [ $? -ne 0 ]; then
+             echo "Error: Failed to clone repository."
+             return 1
+           fi
 
-              echo "Successfully cloned $1"
-            }
-            commit() {
-              if [ ! -d .git ]; then
-                  echo "Error: Not in a git repository root directory" >&2
-                  return 1
-              fi
+           echo "Successfully cloned $1"
+         }
+         commit() {
+           if [ ! -d .git ]; then
+               echo "Error: Not in a git repository root directory" >&2
+               return 1
+           fi
 
-              if [ $# -eq 0 ]; then
-                  echo "Error: Please provide a commit message"
-                  return 1
-              fi
+           if [ $# -eq 0 ]; then
+               echo "Error: Please provide a commit message"
+               return 1
+           fi
 
-              git add .
-              git commit -m "$*"
-              git push
-            }
-    '';
+           git add .
+           git commit -m "$*"
+           git push
+         }
+      '';
   };
 }
