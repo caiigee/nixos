@@ -5,6 +5,9 @@
   # manage.
   home.username = "caiigee";
   home.homeDirectory = "/home/caiigee";
+  programs.ssh.enable = true;
+  programs.fastfetch.enable = true;
+  fonts.fontconfig.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -14,8 +17,6 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
-
-  fonts.fontconfig.enable = true;
 
   # Cursor:
   home.pointerCursor = {
@@ -45,12 +46,11 @@
       };
     };
   };
-
   dconf.settings = {
     "org/gnome/desktop/interface".color-scheme = "prefer-dark";
   };
 
-  # SOFTWARE
+  # Packages
   home.packages = with pkgs; [
     # Apps:
     libreoffice-fresh
@@ -64,6 +64,9 @@
     sqlitebrowser
     anki
     pdfarranger
+    prismlauncher
+    mangohud
+    gamemode
 
     # Fonts (for some reason they don't symlink to /etc/profiles/per-user/caiigee/share/fonts):
     nerd-fonts.symbols-only
@@ -76,13 +79,13 @@
     (pkgs.writeShellApplication {
       name = "open-project";
       runtimeInputs = [ pkgs.fzf ];
-      text = builtins.readFile ./assets/scripts/open_project.sh; 
+      text = builtins.readFile ./assets/scripts/open_project.sh;
     })
     bat
-    prismlauncher
+    waypaper
   ];
 
-  programs.ssh.enable = true;
+  # git
   programs.git = {
     enable = true;
     userName = "caiigee";
@@ -94,23 +97,33 @@
     };
   };
 
+  # tmux
   programs.tmux = {
     enable = true;
+    # plugins = [
+    #   {
+    #     plugin = pkgs.tmuxPlugins.resurrect;
+    #     extraConfig = ''
+    #       set -g @resurrect-capture-pane-contents 'on'
+    #     '';
+    #   }
+    # ];
     extraConfig = ''
       set-option -g status-position top
+      set -g mouse on
+      set -sg escape-time 10
     '';
   };
-  programs.fastfetch.enable = true;
 
-  # BLUETOOTH
+  # Bluetooth
   services.mpris-proxy.enable = true;
 
-  # ENVIRONMENT VARIABLES
+  # Environment variables
   home.sessionVariables = {
     BROWSER = "firefox";
     XDG_SCREENSHOTS_DIR = "/home/caiigee/Pictures/Screenshots";
     PROMPT_DIRTRIM = 2;
-		EDITOR = "nvim";
+    EDITOR = "nvim";
     NOTES_DIR = "/home/caiigee/Documents/Notes";
     PROJECTS_DIR = "/home/caiigee/Desktop/Projects";
     TERMINAL = "kitty";

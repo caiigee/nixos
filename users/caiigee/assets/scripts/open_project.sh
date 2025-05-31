@@ -48,4 +48,4 @@ fi
 
 # Open the project in the terminal
 cd "$PROJECTS_DIR/$chosen_dir" || exit
-exec nix develop . -c tmux new "$EDITOR"
+exec tmux new nix develop -c "$EDITOR"

@@ -1,5 +1,7 @@
 { pkgs, ... }:
+
 {
+  # Packages
   home.packages = with pkgs; [
     baobab
     nautilus
@@ -22,6 +24,7 @@
     grimblast
     wl-clipboard
     gnome-epub-thumbnailer
+    hyprpaper
   ];
   programs.kitty = {
     enable = true;
@@ -113,13 +116,13 @@
         exec-once = [
           "uwsm app -s b -- clipse -listen"
           "uwsm app -s b -- waybar"
-          "uwsm app -s b -- wpchanger"
+          # "uwsm app -s b -- ${lib.getExe wpchanger}"
           "systemctl --user enable --now hypridle.service"
-          "systemctl --user enable --now hyprpaper.service"
+          # "systemctl --user enable --now hyprpaper.service"
           "systemctl --user enable --now hyprpolkitagent.service"
           "[workspace 1 silent] $browser --new-tab https://chatgpt.com --new-tab https://claude.ai"
           "[workspace 1 silent] sleep 1;$fileManager  ~"
-          "[workspace 1 silent] sleep 2.8;hyprctl dispatch resizewindowpixel exact 35% 100%,class:firefox;$terminal"
+          "[workspace 1 silent] sleep 2.8;hyprctl dispatch resizewindowpixel exact 35% 100%,class:firefox;uwsm app -T -- tmux"
         ];
 
         # NVidia drivers broke Zed so this is the workaround:
@@ -241,20 +244,18 @@
             "SUPER, L, movefocus, r"
             "SUPER, K, movefocus, u"
             "SUPER, J, movefocus, d"
-            "ALT, Tab, cyclenext"
-            "ALT SHIFT, Tab, cyclenext prev"
 
             # Switching to other workspaces:
             "SUPER, tab, workspace, +1"
             "SUPER SHIFT, tab, workspace, -1"
 
             # Moving windows
-            "SUPER SHIFT, right, movetoworkspace, +1"
-            "SUPER SHIFT, left, movetoworkspace, -1"
-            "SUPER CTRL, right, movewindow, r"
-            "SUPER CTRL, left, movewindow, l"
-            "SUPER CTRL, up, movewindow, u"
-            "SUPER CTRL, down, movewindow, d"
+            "SUPER SHIFT, L, movetoworkspace, +1"
+            "SUPER SHIFT, H, movetoworkspace, -1"
+            "SUPER CTRL, L, movewindow, r"
+            "SUPER CTRL, H, movewindow, l"
+            "SUPER CTRL, K, movewindow, u"
+            "SUPER CTRL, J, movewindow, d"
 
             # Audio and brightness control:
             ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -276,10 +277,10 @@
 
         binde = [
           # Resizing
-          "SUPER ALT, left, resizeactive, -32 0"
-          "SUPER ALT, right, resizeactive, 32 0"
-          "SUPER ALT, up, resizeactive, 0 -32"
-          "SUPER ALT, down, resizeactive, 0 32"
+          "SUPER ALT, H, resizeactive, -32 0"
+          "SUPER ALT, L, resizeactive, 32 0"
+          "SUPER ALT, K, resizeactive, 0 -32"
+          "SUPER ALT, J, resizeactive, 0 32"
 
           # Audio
           ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
@@ -314,7 +315,8 @@
           # Floating pop-ups:
           "float,class:firefox,initialTitle:^$"
           "float,class:firefox,initialTitle:^(Library)$"
-          "float,class:^(com.github.johnfactotum.Foliate)$,initialTitle:^(Image from .+)$"
+          "float,class:^(\.blueman-manager-wrapped)$,initialTitle:^(Bluetooth Devices)$"
+          "float,class:^(com\.github\.johnfactotum\.Foliate)$,initialTitle:^(Image from .+)$"
           "float,class:^(signal-desktop)$,title:^(Save File)$"
           "float,class:^(signal-desktop)$,title:^(Open Files)$"
 
@@ -378,14 +380,14 @@
   };
 
   # Hyprpaper:
-  services.hyprpaper = {
-    enable = true;
-    # Required for generating the hyprpaper.conf file:
-    settings = {
-      preload = "";
-      wallpaper = "";
-    };
-  };
+  # services.hyprpaper = {
+  #   enable = true;
+  #   # Required for generating the hyprpaper.conf file:
+  #   settings = {
+  #     preload = "";
+  #     wallpaper = "";
+  #   };
+  # };
 
   # Hyprlock:
   programs.hyprlock = {
@@ -424,6 +426,7 @@
     };
   };
 
+  # UWSM
   programs.bash.profileExtra = ''
     if uwsm check may-start; then
       exec uwsm start -S hyprland-uwsm.desktop

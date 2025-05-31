@@ -5,7 +5,7 @@
 let
   gnomeTheme = builtins.fetchGit {
     url = "https://github.com/rafaelmardojai/firefox-gnome-theme.git";
-    rev = "aa9b67045fcdec7ae045b36d7a41b36b3463b842";
+    rev = "59e3de00f01e5adb851d824cf7911bd90c31083a";
   };
 in
 {
@@ -135,6 +135,16 @@ in
               name = "Gramatika";
               keyword = "hsg";
               url = "http://gramatika.hr/";
+            }
+            {
+              name = "Nix manual";
+              keyword = "nm";
+              url = "https://nixos.org/manual/nixpkgs/unstable/";
+            }
+            {
+              name = "Minecraft wiki";
+              keyword = "mw";
+              url = "https://minecraft.wiki";
             }
           ];
         };
@@ -361,6 +371,22 @@ in
               icon = "https://crates.io/assets/cargo.png";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "cr:" ];
+            };
+            "Minecraft Wiki" = {
+              urls = [
+                {
+                  template = "https://minecraft.wiki/w/";
+                  params = [
+                    {
+                      "name" = "search";
+                      "value" = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              icon = "https://minecraft.wiki/favicon.ico";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "mw:" ];
             };
             "bing".metaData.hidden = true;
             "google".metaData.hidden = true;

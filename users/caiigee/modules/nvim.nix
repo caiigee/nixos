@@ -23,12 +23,12 @@
             vim.cmd("mkview")
           end,
         })
-        vim.api.nvim_create_autocmd('BufWinEnter', {
+        vim.api.nvim_create_autocmd("BufWinEnter", {
           group = remember_folds,
-          pattern = '?*',
+          pattern = "?*",
           callback = function()
-            vim.cmd('normal! zX')
-            vim.cmd('silent! loadview')
+            vim.cmd("normal! zX")
+            vim.cmd("silent! loadview")
           end,
         })
 
@@ -43,6 +43,14 @@
             vim.bo.tabstop = 4
           end,
         })
+        -- For some reason markdown is still 4 so I have to force it like this:
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = {"markdown"},
+          callback = function()
+            vim.bo.shiftwidth = 2
+            vim.bo.tabstop = 2
+          end,
+        })
 
         -- Clipboard settings
         vim.o.clipboard = 'unnamedplus'
@@ -52,8 +60,24 @@
         vim.o.termguicolors = true
         vim.g.mapleader = ' '
         vim.g.maplocalleader = ' '
+
+        -- Text wrapping
         vim.o.wrap = false
-        vim.cmd.colorscheme = 'catppuccin'
+        vim.api.nvim_create_autocmd("FileType", {
+          pattern = "markdown",
+          callback = function()
+            -- Enable line wrapping
+            vim.opt_local.wrap = true
+            -- Make it wrap at word boundaries
+            vim.opt_local.linebreak = true
+            -- Indents wrapped lines to match the beginning of the text
+            vim.opt_local.breakindent = true
+          end
+        })
+
+        -- Search settings
+        vim.opt.ignorecase = true
+        vim.opt.smartcase = true
 
         -- Misc shortcuts
         vim.keymap.set('n', '<leader>x', ':w<CR>:bd<CR>', { noremap = true, silent = true })
@@ -69,6 +93,24 @@
         vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
         vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent = true })
         vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
+
+        -- Disable arrow keys in Normal mode
+        vim.keymap.set('n', '<Up>', '<Nop>', { noremap = true })
+        vim.keymap.set('n', '<Down>', '<Nop>', { noremap = true })
+        vim.keymap.set('n', '<Left>', '<Nop>', { noremap = true })
+        vim.keymap.set('n', '<Right>', '<Nop>', { noremap = true })
+
+        -- Disable arrow keys in Insert mode
+        vim.keymap.set('i', '<Up>', '<Nop>', { noremap = true })
+        vim.keymap.set('i', '<Down>', '<Nop>', { noremap = true })
+        vim.keymap.set('i', '<Left>', '<Nop>', { noremap = true })
+        vim.keymap.set('i', '<Right>', '<Nop>', { noremap = true })
+
+        -- Disable arrow keys in Visual mode
+        vim.keymap.set('v', '<Up>', '<Nop>', { noremap = true })
+        vim.keymap.set('v', '<Down>', '<Nop>', { noremap = true })
+        vim.keymap.set('v', '<Left>', '<Nop>', { noremap = true })
+        vim.keymap.set('v', '<Right>', '<Nop>', { noremap = true })
       '';
     plugins = with pkgs.vimPlugins; [
       nvim-web-devicons
@@ -79,8 +121,40 @@
       luasnip
       cmp_luasnip
       friendly-snippets
-      catppuccin-nvim
       comment-nvim
+
+      # Catppuccin
+      {
+        plugin = catppuccin-nvim;
+        type = "lua";
+        config = # lua
+          ''
+            require("catppuccin").setup({
+              flavour = "mocha",
+              term_colors = true,
+              transparent_background = false,
+              integrations = {
+                treesitter = true,
+                native_lsp = {
+                  enabled = true,
+                  virtual_text = {
+                    errors = { "italic" },
+                    hints = { "italic" },
+                    warnings = { "italic" },
+                    information = { "italic" },
+                  },
+                  underlines = {
+                    errors = { "underline" },
+                    hints = { "underline" },
+                    warnings = { "underline" },
+                    information = { "underline" },
+                  },
+                },
+              }
+            })
+            vim.cmd.colorscheme("catppuccin")
+          '';
+      }
 
       # Treesitter
       {
@@ -94,6 +168,9 @@
             p.tree-sitter-regex
             p.tree-sitter-bash
             p.tree-sitter-lua
+            p.tree-sitter-markdown
+            p.tree-sitter-markdown-inline
+            p.tree-sitter-latex
           ])
         );
         type = "lua";
@@ -118,11 +195,22 @@
         type = "lua";
         config = # lua
           ''
-            require('telescope').setup()
-            vim.keymap.set('n', '<leader>tf', '<cmd>Telescope find_files<cr>')
-            vim.keymap.set('n', '<leader>tg', '<cmd>Telescope live_grep<cr>')
-            vim.keymap.set('n', '<leader>tb', '<cmd>Telescope buffers<cr>')
-            vim.keymap.set('n', '<leader>th', '<cmd>Telescope help_tags<cr>')
+              require('telescope').setup({
+                pickers = {
+                  find_files = {
+                    hidden = true,
+                  }
+                }
+              })
+              vim.keymap.set('n', '<leader>tf', '<cmd>Telescope find_files<cr>')
+              vim.keymap.set('n', '<leader>tg', '<cmd>Telescope live_grep<cr>')
+              vim.keymap.set('n', '<leader>tb', '<cmd>Telescope buffers<cr>')
+              vim.keymap.set('n', '<leader>th', '<cmd>Telescope help_tags<cr>')
+              vim.keymap.set('n', '<leader>to', function()
+                require("telescope.builtin").oldfiles({
+                  cwd_only = true,
+              })
+            end)
           '';
       }
 
@@ -155,6 +243,7 @@
             vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
             vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+            vim.keymap.set("n", "<leader>se", vim.diagnostic.open_float, opts)
             vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
             vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
           '';
@@ -178,6 +267,10 @@
                 css = { "prettierd" },
                 markdown = { "prettierd" },
               },
+              format_on_save = {
+                timeout_ms = 500,
+                lsp_format = "fallback",
+              },
             })
 
             vim.keymap.set("n", "<leader>f", function()
@@ -194,7 +287,6 @@
           ''
             local lint = require("lint")
             lint.linters_by_ft = {
-              markdown = { "vale" },
               nix = { "statix" },
               python = { "ruff" },
               rust = { "clippy" },
@@ -204,6 +296,12 @@
               css = { "stylelint" },
               bash = { "shellcheck" },
             }
+            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+              group = vim.api.nvim_create_augroup("lint", { clear = true }), 
+              callback = function()
+                lint.try_lint()
+              end,
+            })
           '';
       }
 
@@ -242,8 +340,18 @@
         config = # lua
           ''
             local npairs = require('nvim-autopairs')
-            npairs.setup({})
+            local Rule = require('nvim-autopairs.rule')
+            local cond = require('nvim-autopairs.conds')
+            npairs.setup({
+              -- Read what this does in the README.md on gh
+              enable_check_bracket_line = false
+            })
 
+            npairs.add_rules({
+              Rule("|","|"):with_move(cond.done())
+            })
+
+            -- Autocomplete fuckery, no clue honestly...
             local cmp_autopairs = require('nvim-autopairs.completion.cmp')
             local cmp = require('cmp')
             cmp.event:on(
@@ -263,19 +371,9 @@
             require("neo-tree").setup({
               filesystem = {
                 filtered_items = {
-                  visible = true,  -- Show hidden files by default
+                  visible = true,
                   hide_dotfiles = false,
                   hide_gitignored = false,
-                },
-                renderers = {
-                  file = {
-                    highlight_git_status = true,
-                    highlight_opened_files = "none",
-                    use_git_status_colors = true,
-                  },
-                  symlink = {
-                    highlight = "Special", -- Sets highlighting for symlinks to a different color
-                  },
                 },
               },
             })
@@ -314,6 +412,11 @@
                     icon = '🔍 ',
                     desc = 'Find files',
                     action = 'Telescope find_files',
+                  },
+                  {
+                    icon = '🍇 ',
+                    desc = 'Search in files',
+                    action = 'Telescope live_grep',
                   },
                   {
                     icon = '📄 ',
@@ -405,7 +508,7 @@
     ];
     extraPackages = with pkgs; [
       tree-sitter
-      gcc
+      clang
 
       # Formatters
       prettierd
