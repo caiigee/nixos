@@ -56,7 +56,7 @@
     libreoffice-fresh
     signal-desktop
     foliate
-    gimp
+    gimp3
     icon-library
     switcheroo
     pinta
@@ -83,6 +83,7 @@
     })
     bat
     waypaper
+    jq
   ];
 
   # git

@@ -321,7 +321,8 @@
           "float,class:^(signal-desktop)$,title:^(Open Files)$"
 
           "size 90% 90%,class:gthumb"
-          "size 60% 60%,class:^(Gimp-2.10)$,title:^(Open Image)$"
+          "size 60% 60%,class:^(gimp)$,title:^(Open Image)$"
+          "size 60% 60%,class:^(file-jpeg)$,title:^(Export Image as JPEG)$"
           "size 90% 90%,class:^(com.github.jeromerobert.pdfarranger)$,title:^(Hide Margins)$"
           "size 90% 90%,class:^(com.github.jeromerobert.pdfarranger)$,title:^(Crop Margins)$"
           "size 80% 80%,class:org.gnome.Calendar"

@@ -19,6 +19,7 @@
     initExtra = # bash
       ''
          umask 0077
+
          flash() {
            if [ -z "$1" ]; then
              echo "ISO path is required!"
@@ -34,6 +35,7 @@
            fi
            sudo dd if="$1" of=/dev/"$2" bs=4M status=progress
          }
+
          install() {
            if [ -z "$1" ]; then
              echo "Package name is required!"
@@ -41,6 +43,7 @@
            fi
            nix profile install nixpkgs#"$1"
          }
+
          remove() {
            if [ -z "$1" ]; then
              echo "Package name is required!"
@@ -48,6 +51,7 @@
            fi
            nix profile remove "$1"
          }
+
          run() {
            if [ -z "$1" ]; then
              echo "Package name is required!"
@@ -55,6 +59,7 @@
            fi
            nix run nixpkgs#$1 ''${@:2}
          }
+
          dev() {
            if [ -z "$1" ]; then
              echo "Error: Project name is required!"
@@ -63,6 +68,7 @@
            
            cd $PROJECTS_DIR/"$1" && nix develop . -c nvim -c "Telescope find_files"
         }
+
         clone() {
            if [ -z "$1" ]; then
              echo "Error: GitHub repository name is required!"
@@ -78,6 +84,7 @@
 
            echo "Successfully cloned $1"
          }
+
          commit() {
            if [ ! -d .git ]; then
                echo "Error: Not in a git repository root directory" >&2
@@ -92,6 +99,18 @@
            git add .
            git commit -m "$*"
            git push
+         }
+
+         show-drv() {
+           local path="\${"1:-."}"
+           local name="\${"2:-default"}"
+
+           if ! nix derivation show "$path#$name" &>/dev/null; then
+             echo "❌ Error: Could not find derivation at path '$path' with name '$name'"
+             return 1
+           fi
+
+           nix derivation show "$path#$name" | vi +':set ft=json readonly nomodifiable nomodified' -
          }
       '';
   };

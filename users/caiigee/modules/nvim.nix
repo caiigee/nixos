@@ -27,8 +27,20 @@
           group = remember_folds,
           pattern = "?*",
           callback = function()
-            vim.cmd("normal! zX")
-            vim.cmd("silent! loadview")
+            local function try_restore(attempts)
+              local ok = pcall(function()
+                vim.cmd("normal! zX")
+                vim.cmd("silent! loadview")
+              end)
+              
+              if not ok and (attempts or 3) > 1 then
+                vim.defer_fn(function()
+                  try_restore((attempts or 3) - 1)
+                end, 200)
+              end
+            end
+            
+            try_restore()
           end,
         })
 
@@ -79,38 +91,25 @@
         vim.opt.ignorecase = true
         vim.opt.smartcase = true
 
-        -- Misc shortcuts
-        vim.keymap.set('n', '<leader>x', ':w<CR>:bd<CR>', { noremap = true, silent = true })
-        vim.keymap.set('n', '<leader>X', ':w<CR>:bd<CR>:q<CR>', { noremap = true, silent = true })
-        vim.keymap.set('n', '<leader>q', ':bd<CR>', { noremap = true, silent = true })
-        vim.keymap.set('n', '<leader>Q', ':bd<CR>:q<CR>', { noremap = true, silent = true })
-        vim.keymap.set('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })
-        vim.api.nvim_set_keymap("n", "<leader><Tab>", "<cmd>bnext<CR>", { noremap = true, silent = true })
-        vim.api.nvim_set_keymap("n", "<leader><S-Tab>", "<cmd>bprevious<CR>", { noremap = true, silent = true })
+        -- File operation hotkeys
+        vim.keymap.set('n', '<leader>x', ':w<CR>:bd<CR>', { silent = true })
+        vim.keymap.set('n', '<leader>X', ':w<CR>:q<CR>', { silent = true })
+        vim.keymap.set('n', '<leader>q', ':bd<CR>', { silent = true })
+        vim.keymap.set('n', '<leader>Q', ':q<CR>', { silent = true })
+        vim.keymap.set('n', '<leader>w', ':w<CR>', { silent = true })
 
-        -- Moving lines Shortcuts
-        vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi", { noremap = true, silent = true })
-        vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { noremap = true, silent = true })
-        vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { noremap = true, silent = true })
-        vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
+        -- Misc hotkeys
+        vim.keymap.set('n', '<leader><Tab>', '<cmd>bnext<CR>', { silent = true })
+        vim.keymap.set('n', '<leader><S-Tab>', '<cmd>bprevious<CR>', { silent = true })
 
-        -- Disable arrow keys in Normal mode
-        vim.keymap.set('n', '<Up>', '<Nop>', { noremap = true })
-        vim.keymap.set('n', '<Down>', '<Nop>', { noremap = true })
-        vim.keymap.set('n', '<Left>', '<Nop>', { noremap = true })
-        vim.keymap.set('n', '<Right>', '<Nop>', { noremap = true })
-
-        -- Disable arrow keys in Insert mode
-        vim.keymap.set('i', '<Up>', '<Nop>', { noremap = true })
-        vim.keymap.set('i', '<Down>', '<Nop>', { noremap = true })
-        vim.keymap.set('i', '<Left>', '<Nop>', { noremap = true })
-        vim.keymap.set('i', '<Right>', '<Nop>', { noremap = true })
-
-        -- Disable arrow keys in Visual mode
-        vim.keymap.set('v', '<Up>', '<Nop>', { noremap = true })
-        vim.keymap.set('v', '<Down>', '<Nop>', { noremap = true })
-        vim.keymap.set('v', '<Left>', '<Nop>', { noremap = true })
-        vim.keymap.set('v', '<Right>', '<Nop>', { noremap = true })
+        -- Disabling arrow keys
+        local modes = { 'n', 'i', 'v' }
+        local arrows = { '<Up>', '<Down>', '<Left>', '<Right>' }
+        for _, mode in ipairs(modes) do
+          for _, arrow in ipairs(arrows) do
+            vim.keymap.set(mode, arrow, '<Nop>')
+          end
+        end
       '';
     plugins = with pkgs.vimPlugins; [
       nvim-web-devicons
@@ -437,6 +436,13 @@
           ''
             require("lualine").setup({
               sections = {
+                lualine_c = {
+                  {
+                    'buffers',
+                    show_filename_only = true,
+                    show_modified_status = true,
+                  }
+                },
                 lualine_x = {
                   {
                     require("noice").api.statusline.mode.get,
