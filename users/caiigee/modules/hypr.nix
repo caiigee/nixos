@@ -102,6 +102,7 @@
         monitor = [
           "desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 2"
           "desc:Acer Technologies Acer XB281HK T4REE0014201, 1920x1080@60.00Hz, 0x0, 1"
+          "desc:Samsung Electric Company SAMSUNG 0x01000E0, 1920x1080@60.00Hz, 0x0, 1"
         ];
 
         # DEFAULT PROGRAMS
@@ -120,7 +121,7 @@
           "systemctl --user enable --now hypridle.service"
           # "systemctl --user enable --now hyprpaper.service"
           "systemctl --user enable --now hyprpolkitagent.service"
-          "[workspace 1 silent] $browser --new-tab https://chatgpt.com --new-tab https://claude.ai"
+          "[workspace 1 silent] $browser --new-tab https://chatgpt.com --new-tab https://claude.ai --new-tab https://gemini.google.com"
           "[workspace 1 silent] sleep 1;$fileManager  ~"
           "[workspace 1 silent] sleep 2.8;hyprctl dispatch resizewindowpixel exact 35% 100%,class:firefox;uwsm app -T -- tmux"
         ];

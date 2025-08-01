@@ -146,6 +146,16 @@ in
               keyword = "mw";
               url = "https://minecraft.wiki";
             }
+            {
+              name = "Rust playground";
+              keyword = "rp";
+              url = "https://play.rust-lang.org/?version=nightly&mode=debug&edition=2024";
+            }
+            {
+              name = "Google gemini";
+              keyword = "gg";
+              url = "https://gemini.google.com";
+            }
           ];
         };
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
