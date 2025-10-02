@@ -66,7 +66,7 @@
              return 1
            fi
            
-           cd $PROJECTS_DIR/"$1" && nix develop . -c nvim -c "Telescope find_files"
+           cd $PROJECTS_DIR/"$1" && nix develop . -c nvim"
         }
 
         clone() {
