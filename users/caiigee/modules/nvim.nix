@@ -9,6 +9,10 @@
     vimdiffAlias = true;
     extraLuaConfig = # lua
       ''
+        -- Leader
+        vim.g.mapleader = ' '
+        vim.g.maplocalleader = ' '
+
         -- Fold settings
         vim.o.foldmethod = 'expr'
         vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
@@ -23,26 +27,7 @@
             vim.cmd("mkview")
           end,
         })
-        vim.api.nvim_create_autocmd("BufWinEnter", {
-          group = remember_folds,
-          pattern = "?*",
-          callback = function()
-            local function try_restore(attempts)
-              local ok = pcall(function()
-                vim.cmd("normal! zX")
-                vim.cmd("silent! loadview")
-              end)
-              
-              if not ok and (attempts or 3) > 1 then
-                vim.defer_fn(function()
-                  try_restore((attempts or 3) - 1)
-                end, 200)
-              end
-            end
-            
-            try_restore()
-          end,
-        })
+        vim.keymap.set('n', '<leader>l', ':loadview<CR>', { silent = true })
 
         -- Indentation settings
         vim.o.shiftwidth = 2
@@ -70,8 +55,6 @@
 
         -- Misc settings
         vim.o.termguicolors = true
-        vim.g.mapleader = ' '
-        vim.g.maplocalleader = ' '
 
         -- Text wrapping
         vim.o.wrap = false

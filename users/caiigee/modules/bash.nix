@@ -4,12 +4,11 @@
   programs.bash = {
     enable = true;
     shellAliases = {
-      ls = "ls -al --color";
+      ls = "ls -l --color --almost-all";
       clean = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
       list = "nix profile list";
-      update = "cd $XDG_CONFIG_HOME/nixos && nix flake update && commit \"Updated lock\"";
       switch = ''
         rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4 /home/caiigee/.mozilla/firefox/normal/search.json.mozlz4
         nix profile remove --all
@@ -66,7 +65,7 @@
              return 1
            fi
            
-           cd $PROJECTS_DIR/"$1" && nix develop . -c nvim"
+           cd $PROJECTS_DIR/"$1" && nix develop
         }
 
         clone() {
@@ -112,6 +111,19 @@
 
            nix derivation show "$path#$name" | vi +':set ft=json readonly nomodifiable nomodified' -
          }
+
+         update() {
+           cd $XDG_CONFIG_HOME/nixos
+          
+           # Check for any unstaged or uncommitted changes, --porcelain gives a stable, parse‑friendly output
+           if [[ -n $(git status --porcelain) ]]; then
+             echo "Error: Unstaged or uncommitted changes detected in $(pwd)."
+             echo "Run 'git status' to view them."
+             return 1
+           fi
+          
+           nix flake update && commit "Updated lock"
+        }
       '';
   };
 }

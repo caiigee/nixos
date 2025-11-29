@@ -24,7 +24,8 @@
     grimblast
     wl-clipboard
     gnome-epub-thumbnailer
-    hyprpaper
+    showtime
+    # hyprpaper
   ];
   programs.kitty = {
     enable = true;
@@ -108,7 +109,7 @@
         # DEFAULT PROGRAMS
         "$terminal" = "uwsm app -- $TERMINAL";
         "$fileManager" = "uwsm app -- $FILE_MANAGER";
-        "$menu" = "uwsm app -- anyrun";
+        # "$menu" = "uwsm app -- anyrun";
         "$browser" = "uwsm app -- $BROWSER";
         "$editor" = "uwsm app -T -- $EDITOR";
         # "$emoji" = "uwsm app -- smile";
@@ -121,7 +122,7 @@
           "systemctl --user enable --now hypridle.service"
           # "systemctl --user enable --now hyprpaper.service"
           "systemctl --user enable --now hyprpolkitagent.service"
-          "[workspace 1 silent] $browser --new-tab https://chatgpt.com --new-tab https://claude.ai --new-tab https://gemini.google.com"
+          "[workspace 1 silent] $browser --new-tab https://lumo.proton.me --new-tab https://drive.proton.me --new-tab https://mail.proton.me --new-tab https://calendar.proton.me"
           "[workspace 1 silent] sleep 1;$fileManager  ~"
           "[workspace 1 silent] sleep 2.8;hyprctl dispatch resizewindowpixel exact 35% 100%,class:firefox;uwsm app -T -- tmux"
         ];
@@ -203,73 +204,72 @@
         };
 
         # GESTURES
-        gestures = {
-          workspace_swipe = true;
-        };
+        # gestures = {
+        #   workspace_swipe = true;
+        # };
 
         # KEYBINDINGS
-        bind =
-          [
-            # Main programs:
-            "SUPER, space, exec, $menu"
-            "SUPER, RETURN, exec, $terminal"
-            "SUPER, T, exec, $editor"
-            "SUPER, F, exec, $fileManager --new-window"
-            "SUPER, B, exec, $browser"
-            "SUPER, A, exec, pkill waybar || uwsm app -- waybar"
-            "SUPER, E, exec, $emoji"
-            #"SUPER, G, exec, uwsm app -- heroic"
+        bind = [
+          # Main programs:
+          "SUPER, space, exec, $menu"
+          "SUPER, RETURN, exec, $terminal tmux"
+          "SUPER, T, exec, $editor"
+          "SUPER, F, exec, $fileManager --new-window"
+          "SUPER, B, exec, $browser"
+          "SUPER, A, exec, pkill waybar || uwsm app -- waybar"
+          "SUPER, E, exec, $emoji"
+          #"SUPER, G, exec, uwsm app -- heroic"
 
-            # Shortcuts:
-            "SUPER, I, exec, cd $XDG_CONFIG_HOME/nixos && uwsm app -T -- tmux new $EDITOR"
-            "SUPER, V, exec, $terminal --class clipse -e clipse"
-            "SUPER, N, exec, cd $NOTES_DIR && $editor"
-            "SUPER, D, exec, uwsm app -T -- open-project"
+          # Shortcuts:
+          "SUPER, I, exec, cd $XDG_CONFIG_HOME/nixos && uwsm app -T -- tmux new $EDITOR"
+          "SUPER, V, exec, $terminal --class clipse -e clipse"
+          "SUPER, N, exec, cd $NOTES_DIR && $editor"
+          "SUPER, D, exec, uwsm app -T -- open-project"
 
-            # Misc:
-            "SUPER, Q, killactive"
-            "SUPER, W, togglefloating"
-            "SUPER, S, togglesplit"
-            "SUPER, Z, exec, loginctl lock-session"
+          # Misc:
+          "SUPER, Q, killactive"
+          "SUPER, W, togglefloating"
+          "SUPER, S, togglesplit"
+          "SUPER, Z, exec, loginctl lock-session"
 
-            # Screenshots:
-            ", Print, exec, uwsm app -- grimblast copysave area"
-            "SUPER SHIFT, S, exec, uwsm app -- grimblast copysave area"
-            "CTRL, Print, exec, uwsm app -- grimblast copysave output"
-            "SUPER SHIFT CTRL, S, exec, uwsm app -- grimblast copysave output"
+          # Screenshots:
+          ", Print, exec, uwsm app -- grimblast copysave area"
+          "SUPER SHIFT, S, exec, uwsm app -- grimblast copysave area"
+          "CTRL, Print, exec, uwsm app -- grimblast copysave output"
+          "SUPER SHIFT CTRL, S, exec, uwsm app -- grimblast copysave output"
 
-            # ", XF86Launch1, togglespecialworkspace, rog"
+          # ", XF86Launch1, togglespecialworkspace, rog"
 
-            # Switching to other windows:
-            "SUPER, H, movefocus, l"
-            "SUPER, L, movefocus, r"
-            "SUPER, K, movefocus, u"
-            "SUPER, J, movefocus, d"
+          # Switching to other windows:
+          "SUPER, H, movefocus, l"
+          "SUPER, L, movefocus, r"
+          "SUPER, K, movefocus, u"
+          "SUPER, J, movefocus, d"
 
-            # Switching to other workspaces:
-            "SUPER, tab, workspace, +1"
-            "SUPER SHIFT, tab, workspace, -1"
+          # Switching to other workspaces:
+          "SUPER, tab, workspace, +1"
+          "SUPER SHIFT, tab, workspace, -1"
 
-            # Moving windows
-            "SUPER SHIFT, L, movetoworkspace, +1"
-            "SUPER SHIFT, H, movetoworkspace, -1"
-            "SUPER CTRL, L, movewindow, r"
-            "SUPER CTRL, H, movewindow, l"
-            "SUPER CTRL, K, movewindow, u"
-            "SUPER CTRL, J, movewindow, d"
+          # Moving windows
+          "SUPER SHIFT, L, movetoworkspace, +1"
+          "SUPER SHIFT, H, movetoworkspace, -1"
+          "SUPER CTRL, L, movewindow, r"
+          "SUPER CTRL, H, movewindow, l"
+          "SUPER CTRL, K, movewindow, u"
+          "SUPER CTRL, J, movewindow, d"
 
-            # Audio and brightness control:
-            ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ]
-          ++ (builtins.concatLists (
-            builtins.genList (
-              i:
-              let
-                ws = i + 1;
-              in
-              [ "SUPER, ${toString ws}, workspace, ${toString ws}" ]
-            ) 9
-          ));
+          # Audio and brightness control:
+          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ]
+        ++ (builtins.concatLists (
+          builtins.genList (
+            i:
+            let
+              ws = i + 1;
+            in
+            [ "SUPER, ${toString ws}, workspace, ${toString ws}" ]
+          ) 9
+        ));
 
         bindm = [
           "SUPER, mouse:272, movewindow"
@@ -320,10 +320,11 @@
           "float,class:^(com\.github\.johnfactotum\.Foliate)$,initialTitle:^(Image from .+)$"
           "float,class:^(signal-desktop)$,title:^(Save File)$"
           "float,class:^(signal-desktop)$,title:^(Open Files)$"
+          "float,class:^(file-.+)$,title:^(Export Image as .+)$"
 
           "size 90% 90%,class:gthumb"
           "size 60% 60%,class:^(gimp)$,title:^(Open Image)$"
-          "size 60% 60%,class:^(file-jpeg)$,title:^(Export Image as JPEG)$"
+          "size 60% 60%,class:^(file-.+)$,title:^(Export Image as .+)$"
           "size 90% 90%,class:^(com.github.jeromerobert.pdfarranger)$,title:^(Hide Margins)$"
           "size 90% 90%,class:^(com.github.jeromerobert.pdfarranger)$,title:^(Crop Margins)$"
           "size 80% 80%,class:org.gnome.Calendar"
@@ -342,44 +343,44 @@
     };
 
   # Hypridle:
-  services.hypridle = {
-    enable = true;
-    settings = {
-      general = {
-        # Command to run when executing `loginctl lock-session`
-        lock_cmd = "pidof hyprlock || uwsm app -- hyprlock";
-        # Lock the screen, set the keyboard brightness to zero and turn off the monitors before suspending.
-        before_sleep_cmd = "pidof hyprlock || uwsm app -- hyprlock && brightnessctl -sd asus::kbd_backlight set 0 && hyprctl dispatch dpms off";
-        # Restore the previous keyboard brightness and turn on the monitors when waking up.
-        after_sleep_cmd = "brightnessctl -rd asus::kbd_backlight && hyprctl dispatch dpms on";
-      };
-
-      listener = [
-        # Dimming the monitors and turning off the keyboard backlight:
-        {
-          timeout = 150; # 2.5min
-          on-timeout = "brightnessctl --save set 0 && brightnessctl -sd asus::kbd_backlight set 0";
-          on-resume = "brightnessctl --restore && brightnessctl -rd asus::kbd_backlight";
-        }
-        # Locking the session:
-        {
-          timeout = 300; # 5min
-          on-timeout = "uwsm app -- hyprlock";
-        }
-        # Turning off the monitors:
-        {
-          timeout = 330; # 5.5min
-          on-timeout = "hyprctl dispatch dpms off";
-          on-resume = "hyprctl dispatch dpms on";
-        }
-        # Suspending the computer:
-        {
-          timeout = 1800; # 30 min
-          on-timeout = "systemctl suspend";
-        }
-      ];
-    };
-  };
+  # services.hypridle = {
+  #   enable = true;
+  #   settings = {
+  #     general = {
+  #       # Command to run when executing `loginctl lock-session`
+  #       lock_cmd = "pidof hyprlock || uwsm app -- hyprlock";
+  #       # Lock the screen, set the keyboard brightness to zero and turn off the monitors before suspending.
+  #       before_sleep_cmd = "pidof hyprlock || uwsm app -- hyprlock && brightnessctl -sd asus::kbd_backlight set 0 && hyprctl dispatch dpms off";
+  #       # Restore the previous keyboard brightness and turn on the monitors when waking up.
+  #       after_sleep_cmd = "brightnessctl -rd asus::kbd_backlight && hyprctl dispatch dpms on";
+  #     };
+  #
+  #     listener = [
+  #       # Dimming the monitors and turning off the keyboard backlight:
+  #       {
+  #         timeout = 150; # 2.5min
+  #         on-timeout = "brightnessctl --save set 0 && brightnessctl -sd asus::kbd_backlight set 0";
+  #         on-resume = "brightnessctl --restore && brightnessctl -rd asus::kbd_backlight";
+  #       }
+  #       # Locking the session:
+  #       {
+  #         timeout = 300; # 5min
+  #         on-timeout = "uwsm app -- hyprlock";
+  #       }
+  #       # Turning off the monitors:
+  #       {
+  #         timeout = 330; # 5.5min
+  #         on-timeout = "hyprctl dispatch dpms off";
+  #         on-resume = "hyprctl dispatch dpms on";
+  #       }
+  #       # Suspending the computer:
+  #       {
+  #         timeout = 1800; # 30 min
+  #         on-timeout = "systemctl suspend";
+  #       }
+  #     ];
+  #   };
+  # };
 
   # Hyprpaper:
   # services.hyprpaper = {

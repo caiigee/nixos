@@ -129,7 +129,7 @@ in
             {
               name = "LMS";
               keyword = "lms";
-              url = "https://lms.mef.hr/e-ucenje/2024-2025/course/index.php?categoryid=1";
+              url = "https://lms.mef.hr/main";
             }
             {
               name = "Gramatika";
@@ -155,6 +155,16 @@ in
               name = "Google gemini";
               keyword = "gg";
               url = "https://gemini.google.com";
+            }
+            {
+              name = "Proton Drive";
+              keyword = "pd";
+              url = "https://drive.proton.me";
+            }
+            {
+              name = "Arch Wiki";
+              keyword = "aw";
+              url = "https://wiki.archlinux.org";
             }
           ];
         };
@@ -274,7 +284,7 @@ in
             "SearXNG" = {
               urls = [
                 {
-                  template = "https://priv.au";
+                  template = "https://search.rhscz.eu";
                   params = [
                     {
                       "name" = "q";
@@ -397,6 +407,22 @@ in
               icon = "https://minecraft.wiki/favicon.ico";
               updateInterval = 24 * 60 * 60 * 1000;
               definedAliases = [ "mw:" ];
+            };
+            "Arch Wiki" = {
+              urls = [
+                {
+                  template = "https://wiki.archlinux.org/index.php";
+                  params = [
+                    {
+                      "name" = "search";
+                      "value" = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              icon = "https://wiki.archlinux.org/favicon.ico";
+              updateInterval = 24 * 60 * 60 * 1000;
+              definedAliases = [ "aw:" ];
             };
             "bing".metaData.hidden = true;
             "google".metaData.hidden = true;

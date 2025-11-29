@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -50,7 +50,7 @@
     "org/gnome/desktop/interface".color-scheme = "prefer-dark";
   };
 
-  # Packages
+  # Packages:
   home.packages = with pkgs; [
     # Apps:
     libreoffice-fresh
@@ -76,6 +76,7 @@
     unzip
     zip
     dex
+    # Open project script.
     (pkgs.writeShellApplication {
       name = "open-project";
       runtimeInputs = [ pkgs.fzf ];
@@ -86,7 +87,7 @@
     jq
   ];
 
-  # git
+  # git:
   programs.git = {
     enable = true;
     userName = "caiigee";
@@ -98,7 +99,7 @@
     };
   };
 
-  # tmux
+  # tmux:
   programs.tmux = {
     enable = true;
     # plugins = [

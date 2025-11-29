@@ -6,7 +6,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -54,8 +55,8 @@
   environment.systemPackages = with pkgs; [
     lact
   ];
-  systemd.packages = with pkgs; [lact];
-  systemd.services.lactd.wantedBy = ["multi-user.target"];
+  systemd.packages = with pkgs; [ lact ];
+  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
   programs.adb.enable = true;
   services.gnome.evolution-data-server.enable = true;
   #  programs.gamemode.enable = true;
@@ -101,7 +102,7 @@
 
   # NVIDIA
   hardware.graphics.enable = true;
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -140,12 +141,13 @@
   };
 
   # Power button:
+  # services.logind.services.Login.HandlePowerKey = "ignore";
   services.logind.powerKey = "ignore";
 
   # On the go:
   specialisation = {
     on-the-go.configuration = {
-      system.nixos.tags = ["on-the-go"];
+      system.nixos.tags = [ "on-the-go" ];
       hardware.nvidia = {
         prime.offload.enable = lib.mkForce true;
         prime.offload.enableOffloadCmd = lib.mkForce true;

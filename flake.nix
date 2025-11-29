@@ -51,28 +51,27 @@
       nixosConfigurations = {
         flowX16-Hyprland = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules =
-            [
-              nur.modules.nixos.default
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.users.caiigee = {
-                  imports = (
-                    getUserModules {
-                      username = "caiigee";
-                      environment = "Hyprland";
-                    }
-                  );
-                };
-              }
-            ]
-            ++ (getSystemModules {
-              system = "x86_64-linux";
-              hostname = "flowX16";
-              environment = "Hyprland";
-            });
+          modules = [
+            nur.modules.nixos.default
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.caiigee = {
+                imports = (
+                  getUserModules {
+                    username = "caiigee";
+                    environment = "Hyprland";
+                  }
+                );
+              };
+            }
+          ]
+          ++ (getSystemModules {
+            system = "x86_64-linux";
+            hostname = "flowX16";
+            environment = "Hyprland";
+          });
         };
 
         server = nixpkgs.lib.nixosSystem {
