@@ -299,9 +299,7 @@
         # WINDOW RULES
         windowrulev2 = [
           "suppressevent maximize, class:.*"
-          "opacity 0.85,class:"
 
-          # Floating apps:
           "float,class:com.saivert.pwvucontrol"
           "float,class:gthumb"
           "float,class:xdg-desktop-portal-gtk"
@@ -432,7 +430,7 @@
   # UWSM
   programs.bash.profileExtra = ''
     if uwsm check may-start; then
-      exec uwsm start -S hyprland-uwsm.desktop
+        exec uwsm start hyprland-uwsm.desktop
     fi
   '';
 

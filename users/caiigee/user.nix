@@ -67,6 +67,7 @@
     prismlauncher
     mangohud
     gamemode
+    protonvpn-gui
 
     # Fonts (for some reason they don't symlink to /etc/profiles/per-user/caiigee/share/fonts):
     nerd-fonts.symbols-only
@@ -90,26 +91,16 @@
   # git:
   programs.git = {
     enable = true;
-    userName = "caiigee";
-    userEmail = "141404025+caiigee@users.noreply.github.com";
-    extraConfig = {
-      core = {
-        sshcommand = "ssh -i /home/caiigee/.ssh/id_ed25519";
-      };
+    settings = {
+      user.name = "caiigee";
+      user.email = "";
+      core.sshcommand = "ssh -i /home/caiigee/.ssh/id_ed25519";
     };
   };
 
   # tmux:
   programs.tmux = {
     enable = true;
-    # plugins = [
-    #   {
-    #     plugin = pkgs.tmuxPlugins.resurrect;
-    #     extraConfig = ''
-    #       set -g @resurrect-capture-pane-contents 'on'
-    #     '';
-    #   }
-    # ];
     extraConfig = ''
       set-option -g status-position top
       set -g mouse on

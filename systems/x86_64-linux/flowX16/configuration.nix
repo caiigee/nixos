@@ -141,8 +141,8 @@
   };
 
   # Power button:
-  # services.logind.services.Login.HandlePowerKey = "ignore";
-  services.logind.powerKey = "ignore";
+  services.logind.settings.Login.HandlePowerKey = "ignore";
+  # services.logind.powerKey = "ignore";
 
   # On the go:
   specialisation = {
