@@ -60,7 +60,7 @@
     icon-library
     switcheroo
     pinta
-    ghidra
+    # ghidra
     sqlitebrowser
     anki
     pdfarranger

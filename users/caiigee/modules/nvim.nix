@@ -501,7 +501,7 @@
 
       # Formatters
       prettierd
-      nixfmt-rfc-style
+      nixfmt
       rustfmt
       black
 

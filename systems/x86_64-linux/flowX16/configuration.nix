@@ -57,7 +57,6 @@
   ];
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
-  programs.adb.enable = true;
   services.gnome.evolution-data-server.enable = true;
   #  programs.gamemode.enable = true;
   #  programs.gamescope.enable = true;
