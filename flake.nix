@@ -37,7 +37,6 @@
           else
             [ ]
         );
-
       getUserModules =
         { username, environment }:
         let
@@ -73,7 +72,6 @@
             environment = "Hyprland";
           });
         };
-
         server = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = (

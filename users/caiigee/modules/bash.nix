@@ -9,16 +9,10 @@
       flipscreen = "hyprctl keyword monitor desc:AU Optronics 0xC199, 2560x1600@60.03Hz, auto, auto, transform, 0";
       zipub = "zip -X0 book.epub mimetype && zip -Xr9D book.epub META-INF OEBPS";
       list = "nix profile list";
-      switch = ''
-        rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4 /home/caiigee/.mozilla/firefox/normal/search.json.mozlz4
-        nix profile remove --all
-        sudo nixos-rebuild switch --flake $XDG_CONFIG_HOME/nixos#$(hostname)-$XDG_CURRENT_DESKTOP
-      '';
     };
     initExtra = # bash
       ''
          umask 0077
-
          flash() {
            if [ -z "$1" ]; then
              echo "ISO path is required!"
@@ -99,7 +93,6 @@
            git commit -m "$*"
            git push
          }
-
          show-drv() {
            local path="\${"1:-."}"
            local name="\${"2:-default"}"
@@ -111,19 +104,24 @@
 
            nix derivation show "$path#$name" | vi +':set ft=json readonly nomodifiable nomodified' -
          }
-
          update() {
            cd $XDG_CONFIG_HOME/nixos
           
            # Check for any unstaged or uncommitted changes, --porcelain gives a stable, parse‑friendly output
            if [[ -n $(git status --porcelain) ]]; then
              echo "Error: Unstaged or uncommitted changes detected in $(pwd)."
-             echo "Run 'git status' to view them."
+             echo "Run 'git status' to view them and then run 'commit' to save the changes."
              return 1
            fi
           
            nix flake update && commit "Updated lock"
         }
-      '';
+        switch() {
+          local desktop="''${1:-$XDG_CURRENT_DESKTOP}"
+          rm /home/caiigee/.mozilla/firefox/default/search.json.mozlz4 /home/caiigee/.mozilla/firefox/normal/search.json.mozlz4
+          nix profile remove --all
+          sudo nixos-rebuild switch --flake "$XDG_CONFIG_HOME/nixos#$(hostname)-$desktop"
+        }
+    '';
   };
 }

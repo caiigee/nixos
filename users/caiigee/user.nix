@@ -5,9 +5,6 @@
   # manage.
   home.username = "caiigee";
   home.homeDirectory = "/home/caiigee";
-  programs.ssh.enable = true;
-  programs.fastfetch.enable = true;
-  fonts.fontconfig.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -26,31 +23,15 @@
     size = 24;
   };
 
-  # GTK Settings:
-  gtk = {
-    enable = true;
-    theme.name = "Adwaita";
-    iconTheme.name = "Adwaita";
-    font = {
-      name = "Cantarell";
-      size = 11;
-    };
-    gtk3 = {
-      extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-    };
-    gtk4 = {
-      extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
-      };
-    };
-  };
-  dconf.settings = {
-    "org/gnome/desktop/interface".color-scheme = "prefer-dark";
-  };
-
   # Packages:
+  programs.ssh.enable = true;
+  fonts.fontconfig.enable = true;
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.vanilla-dmz;
+    name = "Adwaita";
+    size = 24;
+  };
   home.packages = with pkgs; [
     # Apps:
     libreoffice-fresh
@@ -58,12 +39,10 @@
     foliate
     gimp3
     icon-library
-    switcheroo
     pinta
     # ghidra
     sqlitebrowser
-    anki
-    pdfarranger
+    # anki
     prismlauncher
     mangohud
     gamemode
@@ -77,14 +56,7 @@
     unzip
     zip
     dex
-    # Open project script.
-    (pkgs.writeShellApplication {
-      name = "open-project";
-      runtimeInputs = [ pkgs.fzf ];
-      text = builtins.readFile ./assets/scripts/open_project.sh;
-    })
     bat
-    waypaper
     jq
   ];
 
@@ -119,7 +91,5 @@
     EDITOR = "nvim";
     NOTES_DIR = "/home/caiigee/Documents/Notes";
     PROJECTS_DIR = "/home/caiigee/Desktop/Projects";
-    TERMINAL = "kitty";
-    FILE_MANAGER = "nautilus";
   };
 }
