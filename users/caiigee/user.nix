@@ -26,12 +26,6 @@
   # Packages:
   programs.ssh.enable = true;
   fonts.fontconfig.enable = true;
-  home.pointerCursor = {
-    gtk.enable = true;
-    package = pkgs.vanilla-dmz;
-    name = "Adwaita";
-    size = 24;
-  };
   home.packages = with pkgs; [
     # Apps:
     libreoffice-fresh
